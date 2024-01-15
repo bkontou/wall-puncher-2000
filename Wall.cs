@@ -11,6 +11,8 @@ public partial class Wall : Node3D
 	public MeshInstance3D wall_background;
 	[Export]
 	public CollisionShape3D wall_collider;
+	[Export]
+	public MeshInstance3D editor_wall_rep;
 
 	
 	[Export]
@@ -36,6 +38,7 @@ public partial class Wall : Node3D
 	{
 		initializeWall();
 		CallDeferred(MethodName.updateTriangles);
+		editor_wall_rep.Visible = false;
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -45,6 +48,7 @@ public partial class Wall : Node3D
 		{
 			// change wall background 
 			//wall_background.Mesh.Set("size", new Vector2(wall_width, wall_height));
+			editor_wall_rep.Mesh.Set("size", new Vector2(wall_width, wall_height));
 		}
 	}
 
@@ -161,20 +165,20 @@ public partial class Wall : Node3D
 	{
 		int num_studs = (int) Mathf.Floor(wall_width / stud_spacing_distance);
 
-		float stud_position = -0.5f * wall_width;
+		float stud_position = -0.5f * wall_width + 0.5f * stud_width;
 		for (int i = 0; i < num_studs; i++) {
 			MeshInstance3D new_stud = wall_stud_scene.Instantiate<MeshInstance3D>();
-			new_stud.Position = new Vector3(stud_position, 0f, 0.3f);
-			new_stud.Mesh.Set("size", new Vector3(0.45f, wall_height, stud_width));
+			new_stud.Position = new Vector3(stud_position, 0f, 0.26f);
+			new_stud.Mesh.Set("size", new Vector3(0.5f, wall_height, stud_width));
 			AddChild(new_stud);
 			stud_position += stud_spacing_distance; 
 		}
 
 		// place stud at very end
-		stud_position = 0.5f * wall_width;
+		stud_position = 0.5f * wall_width - 0.5f * stud_width;
 		MeshInstance3D final_stud = wall_stud_scene.Instantiate<MeshInstance3D>();
-		final_stud.Position = new Vector3(stud_position, 0f, 0.3f);
-		final_stud.Mesh.Set("size", new Vector3(0.45f, wall_height, stud_width));
+		final_stud.Position = new Vector3(stud_position, 0f, 0.26f);
+		final_stud.Mesh.Set("size", new Vector3(0.5f, wall_height, stud_width));
 		AddChild(final_stud);
 	}
 }
