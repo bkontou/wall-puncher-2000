@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://dfu8bvfmja3bm"]
+
+[ext_resource type="Texture2D" uid="uid://de1il5eh75b3p" path="res://Images/stud.png" id="1_6ops3"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_etprw"]
+shading_mode = 0
+diffuse_mode = 3
+specular_mode = 2
+disable_ambient_light = true
+disable_fog = true
+albedo_texture = ExtResource("1_6ops3")
+uv1_scale = Vector3(1, 2, 1)
+texture_filter = 0
+
+[sub_resource type="BoxMesh" id="BoxMesh_pv5sj"]
+material = SubResource("StandardMaterial3D_etprw")
+
+[node name="WallStud" type="MeshInstance3D"]
+transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, 0, 0, 0)
+mesh = SubResource("BoxMesh_pv5sj")

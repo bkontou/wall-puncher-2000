@@ -1,0 +1,59 @@
+[gd_scene load_steps=7 format=3 uid="uid://vejbky2l7cv5"]
+
+[ext_resource type="PackedScene" uid="uid://wwfl4wpjxgd0" path="res://wall.tscn" id="1_8unjd"]
+[ext_resource type="PackedScene" uid="uid://b0nfjgbtk1hof" path="res://pc.tscn" id="2_jbi4g"]
+[ext_resource type="Texture2D" uid="uid://1e74c68awubv" path="res://icon.svg" id="2_rb5dp"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_dbbqi"]
+size = Vector2(56, 56)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_t5sh4"]
+albedo_color = Color(0.439216, 0.439216, 0.439216, 1)
+roughness_texture = ExtResource("2_rb5dp")
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_47xx6"]
+data = PackedVector3Array(28, 0, 28, -28, 0, 28, 28, 0, -28, -28, 0, 28, -28, 0, -28, 28, 0, -28)
+
+[node name="TestScene" type="Node3D"]
+
+[node name="Wall" parent="." instance=ExtResource("1_8unjd")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 4.75941, 1.50215, -4.50479)
+wall_width = 10.0
+wall_height = 4.0
+
+[node name="Wall2" parent="." node_paths=PackedStringArray("wall_background", "wall_collider") instance=ExtResource("1_8unjd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.243201, 1.49825, 0.489276)
+wall_background = NodePath("../Wall/WallBackground")
+wall_collider = NodePath("../Wall/StaticBody3D/CollisionShape3D")
+wall_width = 10.0
+wall_height = 4.0
+
+[node name="Wall3" parent="." node_paths=PackedStringArray("wall_background", "wall_collider") instance=ExtResource("1_8unjd")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -5.22728, 1.49518, -4.49626)
+wall_background = NodePath("../Wall/WallBackground")
+wall_collider = NodePath("../Wall/StaticBody3D/CollisionShape3D")
+wall_width = 10.0
+wall_height = 4.0
+
+[node name="Wall4" parent="." node_paths=PackedStringArray("wall_background", "wall_collider") instance=ExtResource("1_8unjd")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -0.357457, 1.5202, -9.46872)
+wall_background = NodePath("../Wall/WallBackground")
+wall_collider = NodePath("../Wall/StaticBody3D/CollisionShape3D")
+wall_width = 10.0
+wall_height = 4.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.476067, 0)
+mesh = SubResource("PlaneMesh_dbbqi")
+surface_material_override/0 = SubResource("StandardMaterial3D_t5sh4")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_47xx6")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.698569, 0.452593, -0.554221, -0.0371185, 0.796424, 0.603598, 0.714579, -0.401083, 0.573157, -4.41819, 1.02393, -1.19966)
+
+[node name="PC" parent="." instance=ExtResource("2_jbi4g")]
+transform = Transform3D(-0.98173, 0, -0.190278, 0, 1, 0, 0.190278, 0, -0.98173, 0.150396, 0.471793, -4.51856)

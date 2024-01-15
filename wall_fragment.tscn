@@ -1,0 +1,49 @@
+[gd_scene load_steps=5 format=3 uid="uid://u55a0o8j3t72"]
+
+[ext_resource type="Script" path="res://wall_fragment.cs" id="1_ud5rm"]
+[ext_resource type="ArrayMesh" uid="uid://ci56cngwcgyk5" path="res://wall_debris.obj" id="2_dgkrw"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_h8wld"]
+albedo_color = Color(0.239216, 0.34902, 1, 1)
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_1prfe"]
+
+[node name="WallFragment" type="Node3D" node_paths=PackedStringArray("array_mesh", "collision_polygon", "area", "wall_particles")]
+script = ExtResource("1_ud5rm")
+array_mesh = NodePath("MeshInstance3D")
+collision_polygon = NodePath("MeshInstance3D/Area3D/CollisionPolygon3D")
+area = NodePath("MeshInstance3D/Area3D")
+wall_particles = NodePath("CPUParticles3D")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+material_override = SubResource("StandardMaterial3D_h8wld")
+mesh = SubResource("ArrayMesh_1prfe")
+
+[node name="Area3D" type="Area3D" parent="MeshInstance3D"]
+collision_mask = 2
+
+[node name="CollisionPolygon3D" type="CollisionPolygon3D" parent="MeshInstance3D/Area3D"]
+depth = 0.5
+polygon = PackedVector2Array(0, 0, 1, 0, 1, 1)
+
+[node name="CPUParticles3D" type="CPUParticles3D" parent="."]
+emitting = false
+amount = 2
+one_shot = true
+explosiveness = 1.0
+mesh = ExtResource("2_dgkrw")
+particle_flag_align_y = true
+particle_flag_rotate_y = true
+direction = Vector3(0, 0.4, -1)
+spread = 35.91
+gravity = Vector3(0, -4.8, 0)
+initial_velocity_min = 1.0
+initial_velocity_max = 3.0
+linear_accel_max = 2.0
+radial_accel_max = 2.02
+angle_max = 1.0
+scale_amount_min = 0.05
+scale_amount_max = 0.2
+
+[connection signal="area_entered" from="MeshInstance3D/Area3D" to="." method="_on_area_3d_area_entered"]
+[connection signal="finished" from="CPUParticles3D" to="." method="_on_cpu_particles_3d_finished"]

@@ -1,0 +1,39 @@
+[gd_scene load_steps=4 format=3 uid="uid://b0nfjgbtk1hof"]
+
+[ext_resource type="Script" path="res://PC.cs" id="1_x4e6k"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_wiruu"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_5k3f0"]
+radius = 0.278175
+
+[node name="PC" type="CharacterBody3D" node_paths=PackedStringArray("pc_fist", "pc_fist_area", "pc_fist_timer", "pc_camera")]
+script = ExtResource("1_x4e6k")
+pc_fist = NodePath("Camera3D/PCFist")
+pc_fist_area = NodePath("Camera3D/PCFist/PCFistArea")
+pc_fist_timer = NodePath("Camera3D/PCFist/FistTimer")
+pc_camera = NodePath("Camera3D")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_wiruu")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.254972, 0)
+
+[node name="PCFist" type="Node3D" parent="Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.513013, -0.254972, -0.959576)
+visible = false
+
+[node name="PCFistArea" type="Area3D" parent="Camera3D/PCFist"]
+process_mode = 4
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Camera3D/PCFist/PCFistArea"]
+shape = SubResource("SphereShape3D_5k3f0")
+
+[node name="FistTimer" type="Timer" parent="Camera3D/PCFist"]
+wait_time = 0.1
+one_shot = true
+
+[connection signal="timeout" from="Camera3D/PCFist/FistTimer" to="." method="_on_fist_timer_timeout"]
