@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 
 [Tool]
@@ -10,6 +11,7 @@ public partial class Wall : Node3D
 	public MeshInstance3D wall_background;
 	[Export]
 	public CollisionShape3D wall_collider;
+
 	
 	[Export]
 	public float wall_width = 5f;
@@ -19,16 +21,21 @@ public partial class Wall : Node3D
 	public float stud_spacing_distance = 0.95f;
 	public float stud_width = 0.1f;
 
+	private List<wall_fragment> wall_fragments = new List<wall_fragment>();
+
 	[Export]
 	public PackedScene wall_fragment_scene;
 	[Export]
 	public PackedScene wall_stud_scene;
 
+	[Signal]
+	public delegate void onWallFragmentDestroyedEventHandler(float fragment_area);
 	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		initializeWall();
+		CallDeferred(MethodName.updateTriangles);
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -53,7 +60,6 @@ public partial class Wall : Node3D
 		// change wall background 
 		wall_background.Mesh.Set("size", new Vector2(wall_width, wall_height));
 		//wall_background.Position = new Vector3(0, 0, 0.5f);
-		GD.Print(wall_background.Position);
 
 		placeStuds();
 	}
@@ -77,7 +83,6 @@ public partial class Wall : Node3D
 		vertex_list.Add(corner_vertex_3);
 		vertex_list.Add(corner_vertex_4);
 
-
 		float x, y;
 		for (int i = 0; i < n; i++) {
 			x = min.X + i * (max.X - min.X) / (n - 1);
@@ -87,15 +92,21 @@ public partial class Wall : Node3D
 				// Clamp generated points within bounds
 				x = Mathf.Clamp(x, min.X + 0.1f, max.X - 0.1f);
 				y = Mathf.Clamp(y, min.Y + 0.1f, max.Y - 0.1f);
+
 				var new_vertex = new TriangleNet.Geometry.Vertex(x, y, 0);
-				vertex_list.Add(new_vertex);
+				vertex_list.Add(new_vertex);				
 			}
 		}
 		
 		var triangulator = new TriangleNet.Meshing.Algorithm.Dwyer();
 		var mesh = triangulator.Triangulate(vertex_list, new TriangleNet.Configuration());
 
-		List<int> corner_ids = new List<int>() {corner_vertex_1.ID, corner_vertex_2.ID, corner_vertex_3.ID, corner_vertex_4.ID};
+		List<int> corner_ids = new List<int>();  //{corner_vertex_1.ID, corner_vertex_2.ID, corner_vertex_3.ID, corner_vertex_4.ID};
+		for (int i = 0; i < 4; i++) {
+			corner_ids.Add(vertex_list[i].ID);
+		}
+
+		var wall_fragment_signal_callable = new Callable(this, MethodName.emitDestroySignal);
 
 		foreach(var i in mesh.Triangles) {
 			var verts = new List<Vector3>();
@@ -107,13 +118,43 @@ public partial class Wall : Node3D
 			wall_fragment new_wall_fragment = wall_fragment_scene.Instantiate<wall_fragment>();
 			new_wall_fragment.initializeWallFragment(verts);
 
+			new_wall_fragment.Connect(wall_fragment.SignalName.onWallDestroy, wall_fragment_signal_callable);
+
 			// If this fragment is connected to an end, we are not able to destroy it
 			if (corner_ids.Contains(i.vertices[0].ID) || corner_ids.Contains(i.vertices[1].ID) || corner_ids.Contains(i.vertices[2].ID)) {
 				new_wall_fragment.area.CollisionMask = 0b0;
 			}
 
+			
 			AddChild(new_wall_fragment);
+			wall_fragments.Add(new_wall_fragment);
 		}
+	}
+
+	// This function will check if any triangles overlap with non-breakable areas (SPECIFICALLY AREAS IN COLLISON LAYER 3!!!)
+	// These triangles will not be breakable
+	// Say if you want a door on a wall, it needs an area in layer 3 
+	private void updateTriangles()
+	{
+
+		foreach (wall_fragment fragment in wall_fragments) {
+			var point_q_params = new PhysicsPointQueryParameters3D();
+			point_q_params.CollideWithAreas = true;
+			point_q_params.CollisionMask = 4;
+			Vector2 triangle_center = fragment.getFragmentCenter();
+			Vector3 triangle_center_global = Transform * (new Vector3(triangle_center.X, triangle_center.Y, 0));
+			point_q_params.Position = triangle_center_global;
+			var point_collisions = PhysicsServer3D.SpaceGetDirectState(GetWorld3D().Space).IntersectPoint(point_q_params);
+			if (point_collisions.Count > 0) {
+				fragment.area.CollisionMask = 0b0;
+				//fragment.Visible = false;
+			}  
+		}
+	}
+
+	private void emitDestroySignal(float fragment_area)
+	{
+		EmitSignal(SignalName.onWallFragmentDestroyed, fragment_area);
 	}
 
 	private void placeStuds()

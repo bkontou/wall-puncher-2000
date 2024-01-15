@@ -17,28 +17,7 @@ data = PackedVector3Array(28, 0, 28, -28, 0, 28, 28, 0, -28, -28, 0, 28, -28, 0,
 [node name="TestScene" type="Node3D"]
 
 [node name="Wall" parent="." instance=ExtResource("1_8unjd")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 4.75941, 1.50215, -4.50479)
-wall_width = 10.0
-wall_height = 4.0
-
-[node name="Wall2" parent="." node_paths=PackedStringArray("wall_background", "wall_collider") instance=ExtResource("1_8unjd")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.243201, 1.49825, 0.489276)
-wall_background = NodePath("../Wall/WallBackground")
-wall_collider = NodePath("../Wall/StaticBody3D/CollisionShape3D")
-wall_width = 10.0
-wall_height = 4.0
-
-[node name="Wall3" parent="." node_paths=PackedStringArray("wall_background", "wall_collider") instance=ExtResource("1_8unjd")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -5.22728, 1.49518, -4.49626)
-wall_background = NodePath("../Wall/WallBackground")
-wall_collider = NodePath("../Wall/StaticBody3D/CollisionShape3D")
-wall_width = 10.0
-wall_height = 4.0
-
-[node name="Wall4" parent="." node_paths=PackedStringArray("wall_background", "wall_collider") instance=ExtResource("1_8unjd")]
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -0.357457, 1.5202, -9.46872)
-wall_background = NodePath("../Wall/WallBackground")
-wall_collider = NodePath("../Wall/StaticBody3D/CollisionShape3D")
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 1.78433, 0)
 wall_width = 10.0
 wall_height = 4.0
 

@@ -11,6 +11,11 @@ public partial class PC : CharacterBody3D
 	[Export]
 	public Timer pc_fist_timer;
 	[Export]
+	public MeshInstance3D pc_fist_model;
+	[Export]
+	public AnimationPlayer pc_fist_animation;
+
+	[Export]
 	public Camera3D pc_camera;
 
 	public const float Speed = 5.0f;
@@ -32,10 +37,10 @@ public partial class PC : CharacterBody3D
 		if (Input.IsActionJustPressed("ui_accept") && IsOnFloor())
 			velocity.Y = JumpVelocity;
 
-		if (Input.IsActionJustPressed("ui_lmb")) {
-			pc_fist.Visible = true;
+		if (Input.IsActionJustPressed("ui_lmb") && pc_fist_timer.IsStopped()) {
 			pc_fist_area.ProcessMode = ProcessModeEnum.Always;
 			pc_fist_timer.Start();
+			pc_fist_animation.Play("fist_punch");
 		}
 
 		// Get the input direction and handle the movement/deceleration.
@@ -73,7 +78,6 @@ public partial class PC : CharacterBody3D
 
 	public void _on_fist_timer_timeout()
 	{
-		pc_fist.Visible = false;
 		pc_fist_area.ProcessMode = ProcessModeEnum.Disabled;
 	}
 }

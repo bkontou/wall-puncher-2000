@@ -15,6 +15,9 @@ public partial class wall_fragment : Node3D
 	[Export]
 	public CpuParticles3D wall_particles;
 
+	[Signal]
+	public delegate void onWallDestroyEventHandler(float fragment_area);
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -53,6 +56,24 @@ public partial class wall_fragment : Node3D
 	{
 		wall_particles.Emitting = true;
 		array_mesh.Visible = false;
+		EmitSignal(SignalName.onWallDestroy, getFragmentArea());
+	}
+
+	public float getFragmentArea()
+	{
+		Vector2 v1 = collision_polygon.Polygon[0];
+		Vector2 v2 = collision_polygon.Polygon[1];
+		Vector2 v3 = collision_polygon.Polygon[2];
+
+		return 0.5f * Mathf.Abs(v1.X * (v2.Y - v3.Y) + v2.X * (v3.Y - v1.Y) + v3.X * (v1.Y - v2.Y));
+	}
+
+	public Vector2 getFragmentCenter()
+	{
+		Vector2 v1 = collision_polygon.Polygon[0];
+		Vector2 v2 = collision_polygon.Polygon[1];
+		Vector2 v3 = collision_polygon.Polygon[2];
+		return (v1 + v2 + v3) / 3f;
 	}
 
 	public void _on_cpu_particles_3d_finished() 

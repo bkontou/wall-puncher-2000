@@ -1,8 +1,14 @@
-[gd_scene load_steps=8 format=3 uid="uid://pna4pvcttmyo"]
+[gd_scene load_steps=12 format=3 uid="uid://pna4pvcttmyo"]
 
 [ext_resource type="PackedScene" uid="uid://wwfl4wpjxgd0" path="res://wall.tscn" id="1_pksn0"]
 [ext_resource type="Texture2D" uid="uid://1e74c68awubv" path="res://icon.svg" id="2_7be0p"]
 [ext_resource type="PackedScene" uid="uid://b0nfjgbtk1hof" path="res://pc.tscn" id="3_wwvk2"]
+[ext_resource type="Script" path="res://Score.cs" id="4_iqfjg"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_u8sd7"]
+size = Vector3(1.86084, 3.96381, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_55t6m"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_k73nw"]
 size = Vector2(56, 56)
@@ -14,28 +20,44 @@ roughness_texture = ExtResource("2_7be0p")
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_4qmu8"]
 data = PackedVector3Array(28, 0, 28, -28, 0, 28, 28, 0, -28, -28, 0, 28, -28, 0, -28, 28, 0, -28)
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_msqqc"]
+albedo_color = Color(0.803922, 0.803922, 0.803922, 1)
+roughness = 0.7
+
 [sub_resource type="PlaneMesh" id="PlaneMesh_kwypw"]
+material = SubResource("StandardMaterial3D_msqqc")
 size = Vector2(50, 50)
 
 [node name="Level" type="Node3D"]
 
 [node name="Wall" parent="." instance=ExtResource("1_pksn0")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 4.75941, 1.50215, -4.50479)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 5, 2, -5)
 wall_width = 10.0
 wall_height = 4.0
 
+[node name="Area3D" type="Area3D" parent="Wall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.18603)
+collision_layer = 4
+collision_mask = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Wall/Area3D"]
+shape = SubResource("BoxShape3D_u8sd7")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Wall/Area3D"]
+mesh = SubResource("CapsuleMesh_55t6m")
+
 [node name="Wall2" parent="." instance=ExtResource("1_pksn0")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.243201, 1.49825, 0.489276)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 wall_width = 10.0
 wall_height = 4.0
 
 [node name="Wall3" parent="." instance=ExtResource("1_pksn0")]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -5.22728, 1.49518, -4.49626)
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -5, 2, -5)
 wall_width = 10.0
 wall_height = 4.0
 
 [node name="Wall4" parent="." instance=ExtResource("1_pksn0")]
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -0.237755, 1.5202, -9.46872)
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 2, -10)
 wall_width = 10.0
 wall_height = 4.0
 
@@ -50,12 +72,38 @@ surface_material_override/0 = SubResource("StandardMaterial3D_klbuy")
 shape = SubResource("ConcavePolygonShape3D_4qmu8")
 
 [node name="PC" parent="." instance=ExtResource("3_wwvk2")]
-transform = Transform3D(-0.98173, 0, -0.190278, 0, 1, 0, 0.190278, 0, -0.98173, 0.150396, 0.471793, -4.51856)
+transform = Transform3D(-0.98173, 0, -0.190278, 0, 1, 0, 0.190278, 0, -0.98173, 0.150396, 1.49139, -4.51856)
 
 [node name="Roof" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -1, -8.74228e-08, 0, 8.74228e-08, -1, 0, 3.39351, 0)
+transform = Transform3D(1, 0, 0, 0, -1, -8.74228e-08, 0, 8.74228e-08, -1, 0, 3.42643, 0)
 mesh = SubResource("PlaneMesh_kwypw")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.627303, 2.43402, -5.0241)
-omni_range = 9.04158
+light_energy = 2.131
+omni_range = 10.696
+
+[node name="Score" type="Node" parent="." node_paths=PackedStringArray("score_label")]
+script = ExtResource("4_iqfjg")
+score_label = NodePath("../Control/Label")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="Control"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 11.0
+offset_right = 225.0
+offset_bottom = 89.0
+text = "SCORE: "
+
+[connection signal="onWallFragmentDestroyed" from="Wall" to="Score" method="_on_wall_fragment_destroyed"]
+[connection signal="onWallFragmentDestroyed" from="Wall2" to="Score" method="_on_wall_fragment_destroyed"]
+[connection signal="onWallFragmentDestroyed" from="Wall3" to="Score" method="_on_wall_fragment_destroyed"]
+[connection signal="onWallFragmentDestroyed" from="Wall4" to="Score" method="_on_wall_fragment_destroyed"]
