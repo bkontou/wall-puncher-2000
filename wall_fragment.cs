@@ -56,6 +56,8 @@ public partial class wall_fragment : Node3D
 	{
 		wall_particles.Emitting = true;
 		array_mesh.Visible = false;
+		//area.SetDeferred("monitorable", false);
+		collision_polygon.SetDeferred("disabled", true);
 		EmitSignal(SignalName.onWallDestroy, getFragmentArea());
 	}
 

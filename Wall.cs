@@ -1,3 +1,4 @@
+using AwesomeNamespace;
 using Godot;
 using System;
 using System.Collections.Generic;
@@ -87,19 +88,24 @@ public partial class Wall : Node3D
 		vertex_list.Add(corner_vertex_3);
 		vertex_list.Add(corner_vertex_4);
 
-		float x, y;
-		for (int i = 0; i < n; i++) {
-			x = min.X + i * (max.X - min.X) / (n - 1);
-			for (int j = 0; j < n; j++) {
-				y = min.Y + j * (max.Y - min.Y) / (n - 1) + rng.RandfRange(-rand_y, rand_y);
-				x += rng.RandfRange(-rand_x, rand_x);
-				// Clamp generated points within bounds
-				x = Mathf.Clamp(x, min.X + 0.1f, max.X - 0.1f);
-				y = Mathf.Clamp(y, min.Y + 0.1f, max.Y - 0.1f);
+		// float x, y;
+		// for (int i = 0; i < n; i++) {
+		// 	x = min.X + i * (max.X - min.X) / (n - 1);
+		// 	for (int j = 0; j < n; j++) {
+		// 		y = min.Y + j * (max.Y - min.Y) / (n - 1) + rng.RandfRange(-rand_y, rand_y);
+		// 		x += rng.RandfRange(-rand_x, rand_x);
+		// 		// Clamp generated points within bounds
+		// 		x = Mathf.Clamp(x, min.X + 0.1f, max.X - 0.1f);
+		// 		y = Mathf.Clamp(y, min.Y + 0.1f, max.Y - 0.1f);
 
-				var new_vertex = new TriangleNet.Geometry.Vertex(x, y, 0);
-				vertex_list.Add(new_vertex);				
-			}
+		// 		var new_vertex = new TriangleNet.Geometry.Vertex(x, y, 0);
+		// 		vertex_list.Add(new_vertex);				
+		// 	}
+		// }
+
+		foreach (Vector2 v in UniformPoissonDiskSampler.SampleRectangle(new Vector2(min.X, min.Y), new Vector2(max.X, max.Y), 0.25f)) {
+			var new_vertex = new TriangleNet.Geometry.Vertex(v.X, v.Y, 0);
+			vertex_list.Add(new_vertex);	
 		}
 		
 		var triangulator = new TriangleNet.Meshing.Algorithm.Dwyer();
