@@ -21,6 +21,9 @@ public partial class Wall : Node3D
 	[Export]
 	public float wall_height = 5f;
 
+	[Export]
+	public Color wall_color = Colors.Aqua;
+
 	public float stud_spacing_distance = 0.95f;
 	public float stud_width = 0.1f;
 
@@ -127,6 +130,7 @@ public partial class Wall : Node3D
 
 			wall_fragment new_wall_fragment = wall_fragment_scene.Instantiate<wall_fragment>();
 			new_wall_fragment.initializeWallFragment(verts);
+			new_wall_fragment.setColor(wall_color);
 
 			new_wall_fragment.Connect(wall_fragment.SignalName.onWallDestroy, wall_fragment_signal_callable);
 

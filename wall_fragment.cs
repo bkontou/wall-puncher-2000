@@ -82,4 +82,10 @@ public partial class wall_fragment : Node3D
 	{
 		QueueFree();
 	}
+
+	public void setColor(Color c)
+	{
+		array_mesh.MaterialOverride.Set("albedo_color", c);
+		wall_particles.Mesh.SurfaceGetMaterial(0).Set("albedo_color", c);
+	}
 }

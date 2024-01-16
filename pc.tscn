@@ -1,6 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://b0nfjgbtk1hof"]
+[gd_scene load_steps=8 format=3 uid="uid://b0nfjgbtk1hof"]
 
 [ext_resource type="Script" path="res://PC.cs" id="1_x4e6k"]
+[ext_resource type="PackedScene" uid="uid://d0bcx7k0ivpk" path="res://fist.glb" id="2_15tw6"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_wiruu"]
 radius = 0.349623
@@ -8,9 +9,6 @@ height = 2.78249
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_5k3f0"]
 radius = 0.278175
-
-[sub_resource type="BoxMesh" id="BoxMesh_hvi1t"]
-size = Vector3(0.25, 0.25, 0.5)
 
 [sub_resource type="Animation" id="Animation_4w8u6"]
 resource_name = "fist_punch"
@@ -32,7 +30,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0, 0.1, 0.2),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Vector3(0.205672, -0.36043, 0.110079), Vector3(0.0925025, 0.00523599, 0.345575), Vector3(0.205672, -0.36043, 0.110079)]
+"values": [Vector3(0.598946, -1.55381, 1.34443), Vector3(0.99605, -2.21769, 0.935046), Vector3(0.598946, -1.55381, 1.34443)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_xmi56"]
@@ -40,13 +38,16 @@ _data = {
 "fist_punch": SubResource("Animation_4w8u6")
 }
 
+[sub_resource type="BoxMesh" id="BoxMesh_hvi1t"]
+size = Vector3(0.25, 0.25, 0.5)
+
 [node name="PC" type="CharacterBody3D" node_paths=PackedStringArray("pc_fist", "pc_fist_area", "pc_fist_timer", "pc_fist_model", "pc_fist_animation", "pc_camera")]
 script = ExtResource("1_x4e6k")
 pc_fist = NodePath("Camera3D/PCFist")
 pc_fist_area = NodePath("Camera3D/PCFist/PCFistArea")
 pc_fist_timer = NodePath("Camera3D/PCFist/FistTimer")
 pc_fist_model = NodePath("Camera3D/PCFist/PCFistMesh")
-pc_fist_animation = NodePath("Camera3D/PCFist/PCFistMesh/AnimationPlayer")
+pc_fist_animation = NodePath("Camera3D/PCFist/fist/AnimationPlayer")
 pc_camera = NodePath("Camera3D")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
@@ -70,13 +71,17 @@ shape = SubResource("SphereShape3D_5k3f0")
 wait_time = 0.1
 one_shot = true
 
-[node name="PCFistMesh" type="MeshInstance3D" parent="Camera3D/PCFist"]
-transform = Transform3D(0.922169, -0.174387, -0.345244, 0.107541, 0.972999, -0.204225, 0.371536, 0.151202, 0.916024, -0.14, -0.105, 0.402)
-mesh = SubResource("BoxMesh_hvi1t")
+[node name="fist" parent="Camera3D/PCFist" instance=ExtResource("2_15tw6")]
+transform = Transform3D(-0.163649, -0.0429204, -0.247743, 0.241458, 0.0556116, -0.169132, 0.0701221, -0.291659, 0.00420886, -0.14, -0.105, 0.402)
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Camera3D/PCFist/PCFistMesh"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Camera3D/PCFist/fist"]
 libraries = {
 "": SubResource("AnimationLibrary_xmi56")
 }
+
+[node name="PCFistMesh" type="MeshInstance3D" parent="Camera3D/PCFist"]
+transform = Transform3D(0.941032, -0.338278, 0.00521359, 0.33729, 0.936858, -0.0923706, 0.0263626, 0.0886821, 0.995711, -0.14, -0.105, 0)
+visible = false
+mesh = SubResource("BoxMesh_hvi1t")
 
 [connection signal="timeout" from="Camera3D/PCFist/FistTimer" to="." method="_on_fist_timer_timeout"]
