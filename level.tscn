@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://b038hjwe6bp7i" path="res://Images/carpet.png" id="2_atad3"]
 [ext_resource type="PackedScene" uid="uid://b0nfjgbtk1hof" path="res://pc.tscn" id="3_wwvk2"]
 [ext_resource type="Texture2D" uid="uid://bngjjy2nds2lj" path="res://Images/ceiling.png" id="4_idwgf"]
-[ext_resource type="Script" path="res://Score.cs" id="4_iqfjg"]
+[ext_resource type="Script" path="res://Scripts/Score.cs" id="5_s7tqs"]
 [ext_resource type="Script" path="res://GameHandler.cs" id="6_gpcuy"]
 [ext_resource type="PackedScene" uid="uid://dcmolfaohxogm" path="res://Objects/Models/bed.glb" id="7_do1bk"]
 [ext_resource type="PackedScene" uid="uid://dsm47d1vxmg3" path="res://Objects/PressureGauge.tscn" id="8_6dee1"]
@@ -127,7 +127,7 @@ one_shot = true
 autostart = true
 
 [node name="Score" type="Node" parent="." node_paths=PackedStringArray("score_label", "timer_label", "game_timer", "game_score_arm", "wall_nodes")]
-script = ExtResource("4_iqfjg")
+script = ExtResource("5_s7tqs")
 score_label = NodePath("../Control/ScoreLabel")
 timer_label = NodePath("../Control/TimerLabel")
 game_timer = NodePath("../GameHandler/LevelTimer")

@@ -1,12 +1,10 @@
 [gd_scene load_steps=10 format=3 uid="uid://u55a0o8j3t72"]
 
-[ext_resource type="Script" path="res://wall_fragment.cs" id="1_ud5rm"]
+[ext_resource type="Script" path="res://Scripts/Walls/wall_fragment.cs" id="1_51qga"]
 [ext_resource type="Texture2D" uid="uid://qldma2esygg0" path="res://Images/debris.png" id="2_akrim"]
 [ext_resource type="Texture2D" uid="uid://dplyxw7lbijyg" path="res://Images/debris_white.png" id="2_n8sgy"]
+[ext_resource type="Material" uid="uid://cermpqn8856wi" path="res://wall_fragment.tres" id="2_op8fj"]
 [ext_resource type="AudioStream" uid="uid://b2apswmdubq3t" path="res://Sfx/smash_01.ogg" id="4_ksqbp"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_h8wld"]
-albedo_color = Color(0.239216, 0.34902, 1, 1)
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_1prfe"]
 
@@ -38,7 +36,7 @@ _surfaces = [{
 }]
 
 [node name="WallFragment" type="Node3D" node_paths=PackedStringArray("array_mesh", "collision_polygon", "area", "wall_particles", "wall_sfx")]
-script = ExtResource("1_ud5rm")
+script = ExtResource("1_51qga")
 array_mesh = NodePath("MeshInstance3D")
 collision_polygon = NodePath("MeshInstance3D/Area3D/CollisionPolygon3D")
 area = NodePath("MeshInstance3D/Area3D")
@@ -46,7 +44,7 @@ wall_particles = NodePath("CPUParticles3D")
 wall_sfx = NodePath("AudioStreamPlayer3D")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-material_override = SubResource("StandardMaterial3D_h8wld")
+material_override = ExtResource("2_op8fj")
 mesh = SubResource("ArrayMesh_1prfe")
 
 [node name="Area3D" type="Area3D" parent="MeshInstance3D"]
@@ -79,5 +77,6 @@ scale_amount_max = 0.2
 stream = ExtResource("4_ksqbp")
 volume_db = -28.0
 
+[connection signal="tree_entered" from="." to="." method="_on_tree_entered"]
 [connection signal="area_entered" from="MeshInstance3D/Area3D" to="." method="_on_area_3d_area_entered"]
 [connection signal="finished" from="CPUParticles3D" to="." method="_on_cpu_particles_3d_finished"]

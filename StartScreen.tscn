@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://hjtwj2thn54v"]
 
-[ext_resource type="Script" path="res://StartScreen.cs" id="1_e1rfd"]
+[ext_resource type="Script" path="res://Scripts/StartScreen.cs" id="1_e1rfd"]
 [ext_resource type="PackedScene" uid="uid://br52cec17ytdt" path="res://Levels/level_01.tscn" id="2_32vg5"]
 
 [node name="StartScreen" type="Node3D" node_paths=PackedStringArray("loading_screen", "start_timer")]

@@ -1,6 +1,6 @@
-[gd_scene load_steps=9 format=3 uid="uid://b0nfjgbtk1hof"]
+[gd_scene load_steps=10 format=3 uid="uid://b0nfjgbtk1hof"]
 
-[ext_resource type="Script" path="res://PC.cs" id="1_x4e6k"]
+[ext_resource type="Script" path="res://Scripts/PC.cs" id="1_flerd"]
 [ext_resource type="PackedScene" uid="uid://d0bcx7k0ivpk" path="res://fist.glb" id="2_15tw6"]
 [ext_resource type="AudioStream" uid="uid://yew1be72ort" path="res://Sfx/fast-simple-chop-5-6270.mp3" id="3_8l5uv"]
 
@@ -42,8 +42,10 @@ _data = {
 [sub_resource type="BoxMesh" id="BoxMesh_hvi1t"]
 size = Vector3(0.25, 0.25, 0.5)
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_va1ru"]
+
 [node name="PC" type="CharacterBody3D" node_paths=PackedStringArray("pc_fist", "pc_fist_area", "pc_fist_timer", "pc_fist_model", "pc_fist_animation", "pc_sfx", "pc_camera")]
-script = ExtResource("1_x4e6k")
+script = ExtResource("1_flerd")
 pc_fist = NodePath("Camera3D/PCFist")
 pc_fist_area = NodePath("Camera3D/PCFist/PCFistArea")
 pc_fist_timer = NodePath("Camera3D/PCFist/FistTimer")
@@ -85,6 +87,15 @@ libraries = {
 transform = Transform3D(0.941032, -0.338278, 0.00521359, 0.33729, 0.936858, -0.0923706, 0.0263626, 0.0886821, 0.995711, -0.14, -0.105, 0)
 visible = false
 mesh = SubResource("BoxMesh_hvi1t")
+
+[node name="ShapeCast3D" type="ShapeCast3D" parent="Camera3D/PCFist"]
+visible = false
+shape = SubResource("SphereShape3D_va1ru")
+target_position = Vector3(0, 0, 0)
+collision_mask = 2
+collide_with_areas = true
+collide_with_bodies = false
+debug_shape_custom_color = Color(1, 0, 1, 1)
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("3_8l5uv")

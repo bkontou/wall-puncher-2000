@@ -1,8 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://vejbky2l7cv5"]
+[gd_scene load_steps=10 format=3 uid="uid://vejbky2l7cv5"]
 
 [ext_resource type="PackedScene" uid="uid://wwfl4wpjxgd0" path="res://wall.tscn" id="1_8unjd"]
+[ext_resource type="Script" path="res://test_scene.cs" id="1_vmxem"]
 [ext_resource type="PackedScene" uid="uid://b0nfjgbtk1hof" path="res://pc.tscn" id="2_jbi4g"]
 [ext_resource type="Texture2D" uid="uid://1e74c68awubv" path="res://icon.svg" id="2_rb5dp"]
+[ext_resource type="Script" path="res://Scripts/Walls/WallMap.cs" id="4_3vmrs"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_dbbqi"]
 size = Vector2(56, 56)
@@ -14,12 +16,19 @@ roughness_texture = ExtResource("2_rb5dp")
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_47xx6"]
 data = PackedVector3Array(28, 0, 28, -28, 0, 28, 28, 0, -28, -28, 0, 28, -28, 0, -28, 28, 0, -28)
 
+[sub_resource type="PlaneMesh" id="PlaneMesh_khd5p"]
+size = Vector2(1, 5)
+
 [node name="TestScene" type="Node3D"]
+script = ExtResource("1_vmxem")
 
 [node name="Wall" parent="." instance=ExtResource("1_8unjd")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 1.78433, 0)
 wall_width = 10.0
 wall_height = 4.0
+cap_start_wall = true
+cap_end_wall = true
+wall_color = Color(0, 0.545098, 0.545098, 1)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.476067, 0)
@@ -36,3 +45,10 @@ transform = Transform3D(0.698569, 0.452593, -0.554221, -0.0371185, 0.796424, 0.6
 
 [node name="PC" parent="." instance=ExtResource("2_jbi4g")]
 transform = Transform3D(-0.275973, 0, -0.961165, 0, 1, 0, 0.961165, 0, -0.275973, -1.49292, 0.471793, -1.9019)
+
+[node name="WallMap" type="Node3D" parent="."]
+script = ExtResource("4_3vmrs")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 2.98023e-08, 1, 0, -1, 2.98023e-08, -5.85048, 0, 0.464422)
+mesh = SubResource("PlaneMesh_khd5p")
