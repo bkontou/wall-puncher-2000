@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://dsm47d1vxmg3"]
+
+[ext_resource type="ArrayMesh" uid="uid://byjg4xwr3wi1f" path="res://Objects/Models/clock.obj" id="1_1c54f"]
+[ext_resource type="Texture2D" uid="uid://chchnspw6stxr" path="res://Images/pressure_gauge_face.png" id="2_oy04n"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lvdd3"]
+albedo_color = Color(0.745098, 0.745098, 0.745098, 1)
+metallic = 0.62
+metallic_specular = 0.51
+roughness = 0.61
+
+[node name="PressureGauge" type="Node3D"]
+
+[node name="Clock" type="MeshInstance3D" parent="."]
+mesh = ExtResource("1_1c54f")
+surface_material_override/0 = SubResource("StandardMaterial3D_lvdd3")
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(0.380942, 0, 0, 0, 1, 0, 0, 0, 0.380942, 0, 0.164059, 0)
+flip_h = true
+flip_v = true
+axis = 1
+texture = ExtResource("2_oy04n")

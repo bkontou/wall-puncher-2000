@@ -1,0 +1,49 @@
+[gd_scene load_steps=5 format=3 uid="uid://ml61878bduvl"]
+
+[ext_resource type="ArrayMesh" uid="uid://byjg4xwr3wi1f" path="res://Objects/Models/clock.obj" id="1_duk1s"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_igytg"]
+albedo_color = Color(1, 0, 0, 1)
+metallic = 1.0
+metallic_specular = 0.65
+roughness = 0.31
+rim_tint = 0.35
+clearcoat_enabled = true
+clearcoat = 0.87
+clearcoat_roughness = 0.16
+heightmap_scale = -5.427
+subsurf_scatter_strength = 0.1
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_cy4e5"]
+top_radius = 1.1
+bottom_radius = 1.0
+height = 0.2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r2veo"]
+transparency = 1
+metallic = 0.4
+roughness = 0.13
+clearcoat = 0.98
+subsurf_scatter_enabled = true
+subsurf_scatter_strength = 0.28
+subsurf_scatter_skin_mode = true
+refraction_enabled = true
+refraction_scale = 0.22
+
+[node name="Clock" type="Node3D"]
+
+[node name="Clock" type="MeshInstance3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+mesh = ExtResource("1_duk1s")
+surface_material_override/0 = SubResource("StandardMaterial3D_igytg")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0632386, 0)
+mesh = SubResource("CylinderMesh_cy4e5")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0475553, 0)
+visible = false
+transparency = 0.81
+mesh = SubResource("CylinderMesh_cy4e5")
+surface_material_override/0 = SubResource("StandardMaterial3D_r2veo")

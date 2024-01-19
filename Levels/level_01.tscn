@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=3 uid="uid://br52cec17ytdt"]
+
+[ext_resource type="PackedScene" uid="uid://pna4pvcttmyo" path="res://level.tscn" id="1_yjibj"]
+[ext_resource type="PackedScene" uid="uid://wwfl4wpjxgd0" path="res://wall.tscn" id="2_n3u3j"]
+
+[node name="Level" instance=ExtResource("1_yjibj")]
+
+[node name="Wall" parent="Walls" index="0" instance=ExtResource("2_n3u3j")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 5, 2, -5)
+wall_width = 10.0
+wall_height = 4.0
+
+[node name="Wall2" parent="Walls" index="1" instance=ExtResource("2_n3u3j")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+wall_width = 10.0
+wall_height = 4.0
+
+[node name="Wall3" parent="Walls" index="2" instance=ExtResource("2_n3u3j")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -5, 2, -5)
+wall_width = 10.0
+wall_height = 4.0
+
+[node name="Wall4" parent="Walls" index="3" instance=ExtResource("2_n3u3j")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 2, -10)
+wall_width = 10.0
+wall_height = 4.0

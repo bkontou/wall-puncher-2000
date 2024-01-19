@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://u55a0o8j3t72"]
+[gd_scene load_steps=10 format=3 uid="uid://u55a0o8j3t72"]
 
 [ext_resource type="Script" path="res://wall_fragment.cs" id="1_ud5rm"]
 [ext_resource type="Texture2D" uid="uid://qldma2esygg0" path="res://Images/debris.png" id="2_akrim"]
 [ext_resource type="Texture2D" uid="uid://dplyxw7lbijyg" path="res://Images/debris_white.png" id="2_n8sgy"]
+[ext_resource type="AudioStream" uid="uid://b2apswmdubq3t" path="res://Sfx/smash_01.ogg" id="4_ksqbp"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_h8wld"]
 albedo_color = Color(0.239216, 0.34902, 1, 1)
@@ -36,12 +37,13 @@ _surfaces = [{
 "vertex_data": PackedByteArray(248, 249, 70, 102, 80, 156, 25, 212, 215, 64, 82, 32, 225, 77, 193, 211, 177, 203, 103, 39, 99, 193, 251, 211, 240, 29, 0, 0, 55, 136, 159, 211, 112, 15, 34, 230, 96, 54, 4, 245, 10, 203, 255, 255, 190, 141, 129, 250, 0, 0, 79, 183, 51, 189, 45, 249, 183, 149, 25, 221, 163, 210, 42, 254, 112, 15, 34, 230, 96, 54, 145, 243, 215, 64, 82, 32, 225, 77, 223, 242, 209, 137, 53, 139, 0, 0, 204, 242, 80, 181, 172, 42, 48, 13, 226, 241, 0, 0, 79, 183, 51, 189, 147, 215, 240, 29, 0, 0, 55, 136, 30, 220, 112, 15, 34, 230, 96, 54, 91, 218, 215, 64, 82, 32, 225, 77, 200, 225, 209, 137, 53, 139, 0, 0, 110, 223, 80, 181, 172, 42, 48, 13, 74, 224, 255, 255, 243, 190, 45, 29, 63, 224, 9, 219, 29, 74, 71, 70, 92, 225, 255, 255, 243, 190, 45, 29, 171, 201, 9, 219, 29, 74, 71, 70, 56, 205, 10, 203, 255, 255, 190, 141, 206, 205, 248, 249, 70, 102, 80, 156, 62, 210, 9, 219, 29, 74, 71, 70, 139, 204, 80, 181, 172, 42, 48, 13, 116, 193, 248, 249, 70, 102, 80, 156, 175, 193, 215, 64, 82, 32, 225, 77, 166, 192, 209, 137, 53, 139, 0, 0, 144, 243, 255, 255, 243, 190, 45, 29, 108, 242, 112, 15, 34, 230, 96, 54, 108, 242, 10, 203, 255, 255, 190, 141, 172, 241, 0, 0, 79, 183, 51, 189, 111, 200, 152, 84, 14, 132, 255, 255, 111, 200, 240, 29, 0, 0, 55, 136, 111, 200, 177, 203, 103, 39, 99, 193, 18, 207, 152, 84, 14, 132, 255, 255, 18, 207, 183, 149, 25, 221, 163, 210, 18, 207, 0, 0, 79, 183, 51, 189, 27, 192, 183, 149, 25, 221, 163, 210, 27, 192, 152, 84, 14, 132, 255, 255, 27, 192, 177, 203, 103, 39, 99, 193, 186, 193, 240, 29, 0, 0, 55, 136, 186, 193, 152, 84, 14, 132, 255, 255, 186, 193, 10, 203, 255, 255, 190, 141, 73, 206, 248, 249, 70, 102, 80, 156, 122, 210, 183, 149, 25, 221, 163, 210, 83, 208, 177, 203, 103, 39, 99, 193, 160, 212, 161, 3, 85, 164, 129, 2, 241, 162, 65, 3, 222, 163, 15, 2, 99, 162, 105, 210, 35, 22, 11, 208, 73, 18, 158, 208, 58, 19, 10, 115, 59, 179, 29, 201, 214, 210, 214, 199, 243, 211, 179, 199, 17, 212, 249, 197, 145, 213, 168, 197, 232, 221, 149, 204, 124, 217, 13, 202, 26, 219, 214, 211, 217, 212, 219, 69, 48, 48, 184, 63, 229, 51, 1, 64, 184, 51, 235, 57, 101, 55, 215, 58, 250, 31, 2, 53, 250, 34, 38, 52, 107, 35, 67, 46, 115, 38, 225, 24, 151, 199, 93, 12, 77, 179, 193, 12, 238, 179, 238, 10, 249, 176, 104, 185, 174, 16, 134, 186, 136, 18, 134, 186, 136, 18, 65, 187, 189, 19, 147, 206, 138, 238, 147, 206, 138, 238, 147, 206, 138, 238, 8, 26, 251, 25, 8, 26, 251, 25, 8, 26, 251, 25, 13, 243, 141, 49, 13, 243, 141, 49, 13, 243, 141, 49, 165, 35, 79, 224, 165, 35, 79, 224, 165, 35, 79, 224, 47, 36, 71, 24, 158, 33, 166, 25, 233, 34, 245, 24, 95, 32, 81, 26)
 }]
 
-[node name="WallFragment" type="Node3D" node_paths=PackedStringArray("array_mesh", "collision_polygon", "area", "wall_particles")]
+[node name="WallFragment" type="Node3D" node_paths=PackedStringArray("array_mesh", "collision_polygon", "area", "wall_particles", "wall_sfx")]
 script = ExtResource("1_ud5rm")
 array_mesh = NodePath("MeshInstance3D")
 collision_polygon = NodePath("MeshInstance3D/Area3D/CollisionPolygon3D")
 area = NodePath("MeshInstance3D/Area3D")
 wall_particles = NodePath("CPUParticles3D")
+wall_sfx = NodePath("AudioStreamPlayer3D")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 material_override = SubResource("StandardMaterial3D_h8wld")
@@ -72,6 +74,10 @@ radial_accel_max = 2.02
 angle_max = 1.0
 scale_amount_min = 0.05
 scale_amount_max = 0.2
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("4_ksqbp")
+volume_db = -28.0
 
 [connection signal="area_entered" from="MeshInstance3D/Area3D" to="." method="_on_area_3d_area_entered"]
 [connection signal="finished" from="CPUParticles3D" to="." method="_on_cpu_particles_3d_finished"]

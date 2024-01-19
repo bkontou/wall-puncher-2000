@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://b0nfjgbtk1hof"]
+[gd_scene load_steps=9 format=3 uid="uid://b0nfjgbtk1hof"]
 
 [ext_resource type="Script" path="res://PC.cs" id="1_x4e6k"]
 [ext_resource type="PackedScene" uid="uid://d0bcx7k0ivpk" path="res://fist.glb" id="2_15tw6"]
+[ext_resource type="AudioStream" uid="uid://yew1be72ort" path="res://Sfx/fast-simple-chop-5-6270.mp3" id="3_8l5uv"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_wiruu"]
 radius = 0.349623
@@ -41,13 +42,14 @@ _data = {
 [sub_resource type="BoxMesh" id="BoxMesh_hvi1t"]
 size = Vector3(0.25, 0.25, 0.5)
 
-[node name="PC" type="CharacterBody3D" node_paths=PackedStringArray("pc_fist", "pc_fist_area", "pc_fist_timer", "pc_fist_model", "pc_fist_animation", "pc_camera")]
+[node name="PC" type="CharacterBody3D" node_paths=PackedStringArray("pc_fist", "pc_fist_area", "pc_fist_timer", "pc_fist_model", "pc_fist_animation", "pc_sfx", "pc_camera")]
 script = ExtResource("1_x4e6k")
 pc_fist = NodePath("Camera3D/PCFist")
 pc_fist_area = NodePath("Camera3D/PCFist/PCFistArea")
 pc_fist_timer = NodePath("Camera3D/PCFist/FistTimer")
 pc_fist_model = NodePath("Camera3D/PCFist/PCFistMesh")
 pc_fist_animation = NodePath("Camera3D/PCFist/fist/AnimationPlayer")
+pc_sfx = NodePath("AudioStreamPlayer3D")
 pc_camera = NodePath("Camera3D")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
@@ -72,7 +74,7 @@ wait_time = 0.1
 one_shot = true
 
 [node name="fist" parent="Camera3D/PCFist" instance=ExtResource("2_15tw6")]
-transform = Transform3D(-0.163649, -0.0429204, -0.247743, 0.241458, 0.0556116, -0.169132, 0.0701221, -0.291659, 0.00420886, -0.14, -0.105, 0.402)
+transform = Transform3D(-0.163649, -0.0429204, -0.247743, 0.241458, 0.0556116, -0.169132, 0.0701221, -0.291659, 0.00420886, -0.140251, -0.104705, 0.404299)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Camera3D/PCFist/fist"]
 libraries = {
@@ -83,5 +85,8 @@ libraries = {
 transform = Transform3D(0.941032, -0.338278, 0.00521359, 0.33729, 0.936858, -0.0923706, 0.0263626, 0.0886821, 0.995711, -0.14, -0.105, 0)
 visible = false
 mesh = SubResource("BoxMesh_hvi1t")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("3_8l5uv")
 
 [connection signal="timeout" from="Camera3D/PCFist/FistTimer" to="." method="_on_fist_timer_timeout"]

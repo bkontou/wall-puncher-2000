@@ -52,7 +52,7 @@ public partial class Wall : Node3D
 		{
 			// change wall background 
 			//wall_background.Mesh.Set("size", new Vector2(wall_width, wall_height));
-			editor_wall_rep.Mesh.Set("size", new Vector2(wall_width, wall_height));
+			//editor_wall_rep.Mesh.Set("size", new Vector2(wall_width, wall_height));
 		}
 	}
 
@@ -190,5 +190,10 @@ public partial class Wall : Node3D
 		final_stud.Position = new Vector3(stud_position, 0f, 0.26f);
 		final_stud.Mesh.Set("size", new Vector3(0.5f, wall_height, stud_width));
 		AddChild(final_stud);
+	}
+
+	public float getWallArea()
+	{
+		return wall_width * wall_height;
 	}
 }
