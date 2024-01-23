@@ -7,9 +7,6 @@
 
 [node name="Wall" parent="Walls" index="0" instance=ExtResource("2_imjom")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 5, 2, -5)
-wall_width = 20.0
-wall_height = 4.0
 
 [node name="Wall2" parent="Walls" index="1" instance=ExtResource("2_imjom")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 4.60184, 2, -5.61175)
-wall_height = 4.0

@@ -1,14 +1,13 @@
-[gd_scene load_steps=27 format=3 uid="uid://pna4pvcttmyo"]
+[gd_scene load_steps=24 format=3 uid="uid://pna4pvcttmyo"]
 
 [ext_resource type="Texture2D" uid="uid://b038hjwe6bp7i" path="res://Images/carpet.png" id="2_atad3"]
 [ext_resource type="PackedScene" uid="uid://b0nfjgbtk1hof" path="res://pc.tscn" id="3_wwvk2"]
 [ext_resource type="Texture2D" uid="uid://bngjjy2nds2lj" path="res://Images/ceiling.png" id="4_idwgf"]
 [ext_resource type="Script" path="res://Scripts/Score.cs" id="5_s7tqs"]
 [ext_resource type="Script" path="res://GameHandler.cs" id="6_gpcuy"]
-[ext_resource type="PackedScene" uid="uid://dcmolfaohxogm" path="res://Objects/Models/bed.glb" id="7_do1bk"]
 [ext_resource type="PackedScene" uid="uid://dsm47d1vxmg3" path="res://Objects/PressureGauge.tscn" id="8_6dee1"]
-[ext_resource type="Texture2D" uid="uid://betfmwvsuydmr" path="res://Images/door1.png" id="8_6gkdr"]
 [ext_resource type="PackedScene" uid="uid://ml61878bduvl" path="res://Objects/clock.tscn" id="9_gymde"]
+[ext_resource type="PackedScene" uid="uid://cud5ir8w7ep6" path="res://wall_map.tscn" id="10_4uwoe"]
 
 [sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_k1br4"]
 
@@ -20,6 +19,19 @@ background_mode = 2
 sky = SubResource("Sky_nvi5k")
 ambient_light_source = 3
 ambient_light_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_msqqc"]
+albedo_color = Color(0.803922, 0.803922, 0.803922, 1)
+albedo_texture = ExtResource("4_idwgf")
+roughness_texture = ExtResource("4_idwgf")
+uv1_triplanar = true
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_kwypw"]
+material = SubResource("StandardMaterial3D_msqqc")
+size = Vector2(50, 50)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_ft35r"]
+data = PackedVector3Array(25, 0, 25, -25, 0, 25, 25, 0, -25, -25, 0, 25, -25, 0, -25, 25, 0, -25)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_k73nw"]
 size = Vector2(56, 56)
@@ -33,32 +45,11 @@ texture_filter = 0
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_4qmu8"]
 data = PackedVector3Array(28, 0, 28, -28, 0, 28, 28, 0, -28, -28, 0, 28, -28, 0, -28, 28, 0, -28)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_msqqc"]
-albedo_color = Color(0.803922, 0.803922, 0.803922, 1)
-albedo_texture = ExtResource("4_idwgf")
-roughness_texture = ExtResource("4_idwgf")
-uv1_triplanar = true
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_kwypw"]
-material = SubResource("StandardMaterial3D_msqqc")
-size = Vector2(50, 50)
-
 [sub_resource type="LabelSettings" id="LabelSettings_lh0e7"]
 font_size = 32
 
 [sub_resource type="LabelSettings" id="LabelSettings_l6mwt"]
 font_size = 42
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3ds0u"]
-metallic = 0.91
-metallic_specular = 0.62
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_gg1c1"]
-material = SubResource("StandardMaterial3D_3ds0u")
-height = 0.2
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_hatti"]
-size = Vector3(2.37665, 4.85385, 1)
 
 [sub_resource type="PrismMesh" id="PrismMesh_dc5nb"]
 size = Vector3(0.1, 0.5, 0.5)
@@ -81,27 +72,27 @@ environment = SubResource("Environment_kmtft")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="WorldEnvironment"]
 transform = Transform3D(1, 0, 0, 0, 0.153952, 0.988078, 0, -0.988078, 0.153952, 0, 12.2514, 0)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.00525719, 0)
-mesh = SubResource("PlaneMesh_k73nw")
-surface_material_override/0 = SubResource("StandardMaterial3D_klbuy")
-
-[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
-shape = SubResource("ConcavePolygonShape3D_4qmu8")
-
-[node name="PC" parent="." instance=ExtResource("3_wwvk2")]
-transform = Transform3D(-0.98173, 0, -0.190278, 0, 1, 0, 0.190278, 0, -0.98173, 0.150396, 1.49139, -4.51856)
-
 [node name="Roof" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -1, -8.74228e-08, 0, 8.74228e-08, -1, 0, 3.42643, 0)
 mesh = SubResource("PlaneMesh_kwypw")
 
-[node name="OmniLight3D" type="OmniLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.627303, 2.43402, -5.0241)
-light_energy = 2.131
-omni_range = 10.696
+[node name="StaticBody3D" type="StaticBody3D" parent="Roof"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Roof/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_ft35r")
+
+[node name="Floor" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.00525719, 0)
+mesh = SubResource("PlaneMesh_k73nw")
+surface_material_override/0 = SubResource("StandardMaterial3D_klbuy")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Floor"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_4qmu8")
+
+[node name="PC" parent="." instance=ExtResource("3_wwvk2")]
+transform = Transform3D(-0.98173, 0, -0.190278, 0, 1, 0, 0.190278, 0, -0.98173, 0.150396, 1.49139, -4.51856)
 
 [node name="GameHandler" type="Node" parent="." node_paths=PackedStringArray("pc", "start_timer", "game_timer", "timer_arm", "end_screen", "countdown_screen", "countdown_label")]
 process_mode = 3
@@ -109,7 +100,7 @@ script = ExtResource("6_gpcuy")
 pc = NodePath("../PC")
 start_timer = NodePath("StartTimer")
 game_timer = NodePath("LevelTimer")
-timer_arm = NodePath("../Clock2/ClockArm")
+timer_arm = NodePath("../Clock/ClockArm")
 end_screen = NodePath("../Control/FinalStats")
 countdown_screen = NodePath("../Control/Countdown")
 countdown_label = NodePath("../Control/Countdown/Label")
@@ -132,7 +123,7 @@ score_label = NodePath("../Control/ScoreLabel")
 timer_label = NodePath("../Control/TimerLabel")
 game_timer = NodePath("../GameHandler/LevelTimer")
 game_score_arm = NodePath("../Destructometer/PressureGauge/PressureGaugeArm")
-wall_nodes = NodePath("../Walls")
+wall_nodes = NodePath("../WallMap")
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
@@ -295,29 +286,6 @@ custom_minimum_size = Vector2(150, 50)
 layout_mode = 2
 text = "Next Level"
 
-[node name="Clock" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.25158, 0)
-visible = false
-mesh = SubResource("CylinderMesh_gg1c1")
-
-[node name="bed" parent="." instance=ExtResource("7_do1bk")]
-transform = Transform3D(1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, -4.12816, 0.362047, -8.53832)
-
-[node name="Door" type="Sprite3D" parent="."]
-transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 0, 1.5411, -0.0262761)
-modulate = Color(0.945098, 0.956863, 0.980392, 1)
-shaded = true
-texture_filter = 0
-texture = ExtResource("8_6gkdr")
-
-[node name="Area3D" type="Area3D" parent="Door"]
-collision_layer = 4
-collision_mask = 4
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Door/Area3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0736999, 0.0551913, 0)
-shape = SubResource("BoxShape3D_hatti")
-
 [node name="Destructometer" type="Node3D" parent="."]
 transform = Transform3D(-0.5, 0, 7.54979e-08, 0, 0.5, 0, -7.54979e-08, 0, -0.5, -3.48407, -3.25158, 0.160704)
 
@@ -333,24 +301,25 @@ mesh = SubResource("PrismMesh_dc5nb")
 skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_xbgoo")
 
-[node name="Clock2" parent="." instance=ExtResource("9_gymde")]
+[node name="Clock" parent="." instance=ExtResource("9_gymde")]
 transform = Transform3D(-0.5, 0, 7.54979e-08, 0, 0.5, 0, -7.54979e-08, 0, -0.5, 0, -3.25158, 0)
 
-[node name="ClockArm" type="Node3D" parent="Clock2"]
+[node name="ClockArm" type="Node3D" parent="Clock"]
 transform = Transform3D(-1.42857, 0, -3.78334e-07, 0, 1.42857, 0, 2.15708e-07, 0, -2.50559, 0, 0, 0)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Clock2/ClockArm"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Clock/ClockArm"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0885108, -0.137768)
 mesh = SubResource("BoxMesh_4c3cx")
-skeleton = NodePath("../../../Clock")
+skeleton = NodePath("")
 
-[node name="OmniLight3D" type="OmniLight3D" parent="Clock2"]
+[node name="OmniLight3D" type="OmniLight3D" parent="Clock"]
 transform = Transform3D(-2, 0, -3.01992e-07, 0, 2, 0, 3.01992e-07, 0, -2, 2.97234, 0.888837, -0.976546)
 
-[node name="Walls" type="Node3D" parent="."]
+[node name="WallMap" parent="." instance=ExtResource("10_4uwoe")]
 
 [connection signal="timeout" from="GameHandler/LevelTimer" to="GameHandler" method="_on_level_timer_timeout"]
 [connection signal="timeout" from="GameHandler/StartTimer" to="GameHandler" method="_on_start_timer_timeout"]
 [connection signal="pressed" from="Control/FinalStats/VBoxContainer/HBoxContainer/QuitButton" to="GameHandler" method="_on_quit_button_pressed"]
 [connection signal="pressed" from="Control/FinalStats/VBoxContainer/HBoxContainer/RestartButton" to="GameHandler" method="_on_restart_button_pressed"]
 [connection signal="pressed" from="Control/FinalStats/VBoxContainer/HBoxContainer/NextLevelButton" to="GameHandler" method="_on_next_level_button_pressed"]
+[connection signal="ready" from="WallMap" to="Score" method="_on_wall_map_ready"]

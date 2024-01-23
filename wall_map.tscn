@@ -1,0 +1,10 @@
+[gd_scene load_steps=4 format=3 uid="uid://cud5ir8w7ep6"]
+
+[ext_resource type="Script" path="res://Scripts/Walls/WallMap.cs" id="1_tgar3"]
+[ext_resource type="PackedScene" uid="uid://wwfl4wpjxgd0" path="res://wall.tscn" id="2_d753t"]
+[ext_resource type="Material" uid="uid://cermpqn8856wi" path="res://wall_fragment.tres" id="3_cb12b"]
+
+[node name="WallMap" type="Node3D"]
+script = ExtResource("1_tgar3")
+wall_scene = ExtResource("2_d753t")
+wall_material = ExtResource("3_cb12b")

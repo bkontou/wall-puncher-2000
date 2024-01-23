@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 
 
-[Tool]
 public partial class Wall : Node3D
 {
 	[Export]
@@ -56,20 +55,25 @@ public partial class Wall : Node3D
 	public override void _Ready()
 	{
 		wall_fragment_signal_callable = new Callable(this, MethodName.emitDestroySignal);
-		initializeWall();
-		CallDeferred(MethodName.updateTriangles);
 		editor_wall_rep.Visible = false;
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-		if (Engine.IsEditorHint())
-		{
-			// change wall background 
-			//wall_background.Mesh.Set("size", new Vector2(wall_width, wall_height));
-			editor_wall_rep.Mesh.Set("size", new Vector2(wall_width, wall_height));
-		}
+		// if (Engine.IsEditorHint())
+		// {
+		// 	// change wall background 
+		// 	//wall_background.Mesh.Set("size", new Vector2(wall_width, wall_height));
+		// 	editor_wall_rep.Mesh.Set("size", new Vector2(wall_width, wall_height));
+		// }
+	}
+
+	public void build()
+	{
+		wall_fragment_signal_callable = new Callable(this, MethodName.emitDestroySignal);
+		initializeWall();
+		CallDeferred(MethodName.updateTriangles);
 	}
 
 	private void initializeWall()
@@ -116,7 +120,7 @@ public partial class Wall : Node3D
 		vertex_list.Add(corner_vertex_3);
 		vertex_list.Add(corner_vertex_4);
 
-		foreach (Vector2 v in UniformPoissonDiskSampler.SampleRectangle(new Vector2(min.X, min.Y), new Vector2(max.X, max.Y), 1f)) {
+		foreach (Vector2 v in UniformPoissonDiskSampler.SampleRectangle(new Vector2(min.X, min.Y), new Vector2(max.X, max.Y), 0.25f)) {
 			var new_vertex = new TriangleNet.Geometry.Vertex(v.X, v.Y, 0);
 			vertex_list.Add(new_vertex);	
 		}

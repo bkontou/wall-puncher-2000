@@ -40,13 +40,7 @@ public partial class Score : Node
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		max_score = 0;
-		foreach (Wall wall in wall_nodes.GetChildren()) {
-			max_score += wall.getWallArea();
-		}
-		max_score = max_score * (1 - score_leeway);
 
-		GD.Print(max_score);
 		total_score = 0;
 	}
 
@@ -61,5 +55,17 @@ public partial class Score : Node
 	public void _on_wall_fragment_destroyed(float fragment_area)
 	{
 		total_score += fragment_area;
+	}
+
+	public void _on_wall_map_ready()
+	{
+		max_score = 0;
+		foreach (Wall wall in wall_nodes.GetChildren()) {
+			GD.Print("child");
+			max_score += wall.getWallArea();
+		}
+		max_score = max_score * (1 - score_leeway);
+
+		GD.Print(max_score);
 	}
 }
