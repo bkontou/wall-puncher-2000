@@ -1,8 +1,9 @@
-[gd_scene load_steps=24 format=3 uid="uid://pna4pvcttmyo"]
+[gd_scene load_steps=25 format=3 uid="uid://pna4pvcttmyo"]
 
 [ext_resource type="Texture2D" uid="uid://b038hjwe6bp7i" path="res://Images/carpet.png" id="2_atad3"]
 [ext_resource type="PackedScene" uid="uid://b0nfjgbtk1hof" path="res://pc.tscn" id="3_wwvk2"]
 [ext_resource type="Texture2D" uid="uid://bngjjy2nds2lj" path="res://Images/ceiling.png" id="4_idwgf"]
+[ext_resource type="PackedScene" uid="uid://hjtwj2thn54v" path="res://StartScreen.tscn" id="5_0v5mo"]
 [ext_resource type="Script" path="res://Scripts/Score.cs" id="5_s7tqs"]
 [ext_resource type="Script" path="res://GameHandler.cs" id="6_gpcuy"]
 [ext_resource type="PackedScene" uid="uid://dsm47d1vxmg3" path="res://Objects/PressureGauge.tscn" id="8_6dee1"]
@@ -94,21 +95,28 @@ shape = SubResource("ConcavePolygonShape3D_4qmu8")
 [node name="PC" parent="." instance=ExtResource("3_wwvk2")]
 transform = Transform3D(-0.98173, 0, -0.190278, 0, 1, 0, 0.190278, 0, -0.98173, 0.150396, 1.49139, -4.51856)
 
-[node name="GameHandler" type="Node" parent="." node_paths=PackedStringArray("pc", "start_timer", "game_timer", "timer_arm", "end_screen", "countdown_screen", "countdown_label")]
+[node name="GameHandler" type="Node" parent="." node_paths=PackedStringArray("pc", "start_timer", "game_timer", "cooldown_timer", "timer_arm", "end_screen", "countdown_screen", "countdown_label")]
 process_mode = 3
 script = ExtResource("6_gpcuy")
 pc = NodePath("../PC")
 start_timer = NodePath("StartTimer")
 game_timer = NodePath("LevelTimer")
+cooldown_timer = NodePath("CooldownTimer")
 timer_arm = NodePath("../Clock/ClockArm")
 end_screen = NodePath("../Control/FinalStats")
 countdown_screen = NodePath("../Control/Countdown")
 countdown_label = NodePath("../Control/Countdown/Label")
+main_menu = ExtResource("5_0v5mo")
 
 [node name="LevelTimer" type="Timer" parent="GameHandler"]
 process_mode = 1
 process_callback = 0
 wait_time = 10.0
+one_shot = true
+
+[node name="CooldownTimer" type="Timer" parent="GameHandler"]
+process_mode = 1
+process_callback = 0
 one_shot = true
 
 [node name="StartTimer" type="Timer" parent="GameHandler"]
@@ -318,6 +326,7 @@ transform = Transform3D(-2, 0, -3.01992e-07, 0, 2, 0, 3.01992e-07, 0, -2, 2.9723
 [node name="WallMap" parent="." instance=ExtResource("10_4uwoe")]
 
 [connection signal="timeout" from="GameHandler/LevelTimer" to="GameHandler" method="_on_level_timer_timeout"]
+[connection signal="timeout" from="GameHandler/CooldownTimer" to="GameHandler" method="_on_cooldown_timer_timeout"]
 [connection signal="timeout" from="GameHandler/StartTimer" to="GameHandler" method="_on_start_timer_timeout"]
 [connection signal="pressed" from="Control/FinalStats/VBoxContainer/HBoxContainer/QuitButton" to="GameHandler" method="_on_quit_button_pressed"]
 [connection signal="pressed" from="Control/FinalStats/VBoxContainer/HBoxContainer/RestartButton" to="GameHandler" method="_on_restart_button_pressed"]

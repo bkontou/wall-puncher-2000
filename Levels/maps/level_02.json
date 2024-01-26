@@ -1,0 +1,79 @@
+{
+	"walls": [
+		{
+			"cap_end": false,
+			"cap_start": false,
+			"double_sided": true,
+			"position_end": [
+				10,
+				0,
+				-10
+			],
+			"position_start": [
+				10,
+				0,
+				8
+			]
+		},
+		{
+			"cap_end": false,
+			"cap_start": false,
+			"double_sided": true,
+			"position_end": [
+				10,
+				0,
+				8
+			],
+			"position_start": [
+				-10,
+				0,
+				8
+			]
+		},
+		{
+			"cap_end": false,
+			"cap_start": false,
+			"double_sided": true,
+			"position_end": [
+				-10,
+				0,
+				8
+			],
+			"position_start": [
+				-10,
+				0,
+				-10
+			]
+		},
+		{
+			"cap_end": false,
+			"cap_start": false,
+			"double_sided": true,
+			"position_end": [
+				-10,
+				0,
+				-10
+			],
+			"position_start": [
+				10,
+				0,
+				-10
+			]
+		},
+		{
+			"cap_end": true,
+			"cap_start": false,
+			"double_sided": true,
+			"position_end": [
+				0,
+				0,
+				-10
+			],
+			"position_start": [
+				0,
+				0,
+				2
+			]
+		}
+	]
+}

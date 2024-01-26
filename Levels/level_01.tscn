@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://br52cec17ytdt"]
+[gd_scene load_steps=7 format=3 uid="uid://br52cec17ytdt"]
 
 [ext_resource type="PackedScene" uid="uid://pna4pvcttmyo" path="res://level.tscn" id="1_yjibj"]
-[ext_resource type="JSON" uid="uid://bcy233kaq8pew" path="res://Levels/maps/level_01.tres" id="2_svl2y"]
+[ext_resource type="PackedScene" uid="uid://ur1y6k1ae2e7" path="res://Levels/level_02.tscn" id="2_5gahk"]
+[ext_resource type="JSON" path="res://Levels/maps/level_01.json" id="2_tlhir"]
 [ext_resource type="Texture2D" uid="uid://betfmwvsuydmr" path="res://Images/door1.png" id="3_stai1"]
 [ext_resource type="PackedScene" uid="uid://c5m7ej32e8qab" path="res://Objects/bed.tscn" id="4_d6pf8"]
 
@@ -13,8 +14,11 @@ size = Vector3(2.98039, 5.00847, 2.11108)
 [node name="PC" parent="." index="3"]
 transform = Transform3D(0.940608, 0, 0.339493, 0, 1, 0, -0.339493, 0, 0.940608, 0.0606585, 1.49139, 2.71135)
 
+[node name="GameHandler" parent="." index="4"]
+next_level = ExtResource("2_5gahk")
+
 [node name="WallMap" parent="." index="9"]
-walls_data = ExtResource("2_svl2y")
+walls_data = ExtResource("2_tlhir")
 
 [node name="Door2" type="Sprite3D" parent="." index="10"]
 transform = Transform3D(0.424264, 0, -0.424264, 0, 0.6, 0, 0.424264, 0, 0.424264, -1.77919, 1.5411, 2.7805)
@@ -33,3 +37,7 @@ shape = SubResource("BoxShape3D_cr25r")
 
 [node name="bed" parent="." index="11" instance=ExtResource("4_d6pf8")]
 transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 0.303789, 0.310382, -3.04514)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="." index="12"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.9957, 0)
+omni_range = 6.70903

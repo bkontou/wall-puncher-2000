@@ -1,12 +1,15 @@
 [gd_scene load_steps=3 format=3 uid="uid://ur1y6k1ae2e7"]
 
 [ext_resource type="PackedScene" uid="uid://pna4pvcttmyo" path="res://level.tscn" id="1_58i7b"]
-[ext_resource type="PackedScene" uid="uid://wwfl4wpjxgd0" path="res://wall.tscn" id="2_imjom"]
+[ext_resource type="JSON" path="res://Levels/maps/level_02.json" id="2_y0ul7"]
 
 [node name="Level" instance=ExtResource("1_58i7b")]
 
-[node name="Wall" parent="Walls" index="0" instance=ExtResource("2_imjom")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 5, 2, -5)
+[node name="PC" parent="." index="3"]
+transform = Transform3D(-0.98173, 0, -0.190278, 0, 1, 0, 0.190278, 0, -0.98173, 4.26067, 1.49139, -2.00098)
 
-[node name="Wall2" parent="Walls" index="1" instance=ExtResource("2_imjom")]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 4.60184, 2, -5.61175)
+[node name="LevelTimer" parent="GameHandler" index="0"]
+wait_time = 25.0
+
+[node name="WallMap" parent="." index="9"]
+walls_data = ExtResource("2_y0ul7")

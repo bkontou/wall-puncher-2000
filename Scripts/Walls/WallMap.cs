@@ -77,7 +77,6 @@ public partial class WallMap : Node3D
 
 				AddChild(wall_1);
 				AddChild(wall_2);
-				GD.Print("hey lol");
 			}
 		}
 		else {
@@ -102,6 +101,7 @@ public partial class WallMap : Node3D
 
 	private void loadData()
 	{
+		GD.Print(walls_data.Data);
 		foreach(Godot.Collections.Dictionary val in walls_data.Data.AsGodotDictionary()["walls"].AsGodotArray())
 		{
 			WallSegmentData wall = new WallSegmentData();
@@ -109,6 +109,7 @@ public partial class WallMap : Node3D
 			wall.position_end = arrayToVec3(val["position_end"].AsGodotArray<float>());
 			wall.cap_start = val["cap_start"].AsBool();
 			wall.cap_end = val["cap_end"].AsBool();
+			wall.double_sided = val["double_sided"].AsBool();
 			wall_segments.Add(wall);
 		}
 	}
@@ -143,7 +144,6 @@ public partial class WallMap : Node3D
 		// Rotate and translate
 		Vector3 wall_center = (segment.position_end + segment.position_start) / 2f;
 		wall_center.Y = 0.5f * wall.wall_height;
-		GD.Print(wall_center);
 		Vector3 wall_dir_final = (segment.position_end - segment.position_start).Normalized();
 
 		wall.RotateY(Vector3.Right.SignedAngleTo(wall_dir_final, Vector3.Up));

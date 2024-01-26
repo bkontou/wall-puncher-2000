@@ -10,7 +10,7 @@ cull_mode = 2
 shading_mode = 0
 albedo_color = Color(0, 0, 0, 1)
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_n7iki"]
+[sub_resource type="PlaneMesh" id="PlaneMesh_jhqbr"]
 size = Vector2(10, 4)
 orientation = 2
 
@@ -31,7 +31,7 @@ wall_stud_scene = ExtResource("3_x2or7")
 [node name="WallBackground" type="MeshInstance3D" parent="."]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, 0)
 material_override = SubResource("StandardMaterial3D_jpycm")
-mesh = SubResource("PlaneMesh_n7iki")
+mesh = SubResource("PlaneMesh_jhqbr")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
 

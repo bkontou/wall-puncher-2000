@@ -20,7 +20,7 @@ public partial class Wall : Node3D
 	[Export]
 	public float wall_width = 5f;
 	[Export]
-	public float wall_height = 5f;
+	public float wall_height = 3.5f;
 	[Export]
 	public float wall_thickness = 0.5f;
 	[Export]
@@ -83,9 +83,13 @@ public partial class Wall : Node3D
 		generateTriangles(wall_pos_min, wall_pos_max, 25);
 		
 		// change wall collsion
+		wall_collider.Shape = new BoxShape3D();
 		wall_collider.Shape.Set("size", new Vector3(wall_width + wall_collision_padding, wall_height, wall_thickness + wall_collision_padding));
 
 		// change wall background 
+		PlaneMesh wall_bg_mesh = new PlaneMesh();
+		wall_bg_mesh.Orientation = PlaneMesh.OrientationEnum.Z;
+		wall_background.Mesh = wall_bg_mesh;
 		wall_background.Mesh.Set("size", new Vector2(wall_width, wall_height));
 		//wall_background.Position = new Vector3(0, 0, 0.5f);
 
@@ -120,7 +124,7 @@ public partial class Wall : Node3D
 		vertex_list.Add(corner_vertex_3);
 		vertex_list.Add(corner_vertex_4);
 
-		foreach (Vector2 v in UniformPoissonDiskSampler.SampleRectangle(new Vector2(min.X, min.Y), new Vector2(max.X, max.Y), 0.25f)) {
+		foreach (Vector2 v in UniformPoissonDiskSampler.SampleRectangle(new Vector2(min.X, min.Y), new Vector2(max.X, max.Y), 0.35f)) {
 			var new_vertex = new TriangleNet.Geometry.Vertex(v.X, v.Y, 0);
 			vertex_list.Add(new_vertex);	
 		}

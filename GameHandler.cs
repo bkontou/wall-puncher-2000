@@ -4,12 +4,17 @@ using System;
 public partial class GameHandler : Node
 {
 	[Export]
+	public PackedScene next_level;
+
+	[Export]
 	public PC pc;
 
 	[Export]
 	public Timer start_timer;
 	[Export]
 	public Timer game_timer;
+	[Export]
+	public Timer cooldown_timer;
 	[Export]
 	public Node3D timer_arm;
 	[Export]
@@ -18,6 +23,9 @@ public partial class GameHandler : Node
 	public Control countdown_screen;
 	[Export]
 	public Label countdown_label;
+
+	[Export]
+	public PackedScene main_menu;
 
 	private bool paused = false;
 	private bool game_finished = false;
@@ -36,6 +44,7 @@ public partial class GameHandler : Node
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
+		GD.Print(Engine.GetFramesPerSecond());
 		if (Input.IsActionJustPressed("ui_cancel") && !game_finished && !game_starting) {
 			if (paused) {
 				pc.setControllable(true);
@@ -70,6 +79,14 @@ public partial class GameHandler : Node
 
     public void _on_level_timer_timeout() {
 		pc.setControllable(false);
+		countdown_screen.Visible = true;
+		countdown_label.Text = "Finished";
+		cooldown_timer.Start();
+	}
+
+	public void _on_cooldown_timer_timeout()
+	{
+		countdown_screen.Visible = false;
 		game_finished = true;
 		end_screen.Visible = true;
 		Input.MouseMode = Input.MouseModeEnum.Visible;
@@ -85,12 +102,17 @@ public partial class GameHandler : Node
 
 	public void _on_quit_button_pressed()
 	{
-		GetTree().Quit();
+		GetTree().ChangeSceneToPacked(main_menu);
 	}
 
 	public void _on_next_level_button_pressed()
 	{
-		GetTree().Quit();
+		if (next_level == null) {
+			GetTree().ChangeSceneToPacked(main_menu);
+		} else
+		{
+			GetTree().ChangeSceneToPacked(next_level);
+		}
 	}
 
 	public void _on_restart_button_pressed()

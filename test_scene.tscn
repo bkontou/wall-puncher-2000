@@ -5,7 +5,6 @@
 [ext_resource type="Texture2D" uid="uid://1e74c68awubv" path="res://icon.svg" id="2_rb5dp"]
 [ext_resource type="PackedScene" uid="uid://cud5ir8w7ep6" path="res://wall_map.tscn" id="5_dspsv"]
 [ext_resource type="Texture2D" uid="uid://betfmwvsuydmr" path="res://Images/door1.png" id="6_dbcwk"]
-[ext_resource type="JSON" uid="uid://bcy233kaq8pew" path="res://Levels/maps/level_01.tres" id="6_vlgos"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_dbbqi"]
 size = Vector2(56, 56)
@@ -16,6 +15,35 @@ roughness_texture = ExtResource("2_rb5dp")
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_47xx6"]
 data = PackedVector3Array(28, 0, 28, -28, 0, 28, 28, 0, -28, -28, 0, 28, -28, 0, -28, 28, 0, -28)
+
+[sub_resource type="JSON" id="JSON_ss24k"]
+data = {
+"walls": [{
+"cap_end": false,
+"cap_start": false,
+"double_sided": true,
+"position_end": [5.0, 0.0, 0.0],
+"position_start": [0.0, 0.0, 5.0]
+}, {
+"cap_end": false,
+"cap_start": false,
+"double_sided": true,
+"position_end": [0.0, 0.0, -5.0],
+"position_start": [5.0, 0.0, 0.0]
+}, {
+"cap_end": false,
+"cap_start": false,
+"double_sided": true,
+"position_end": [-5.0, 0.0, 0.0],
+"position_start": [0.0, 0.0, -5.0]
+}, {
+"cap_end": false,
+"cap_start": false,
+"double_sided": true,
+"position_end": [0.0, 0.0, 5.0],
+"position_start": [-5.0, 0.0, 0.0]
+}]
+}
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u67mo"]
 cull_mode = 2
@@ -46,7 +74,7 @@ transform = Transform3D(0.698569, 0.452593, -0.554221, -0.0371185, 0.796424, 0.6
 transform = Transform3D(-0.275973, 0, -0.961165, 0, 1, 0, 0.961165, 0, -0.275973, -1.49292, 1.35533, -1.9019)
 
 [node name="WallMap" parent="." instance=ExtResource("5_dspsv")]
-walls_data = ExtResource("6_vlgos")
+walls_data = SubResource("JSON_ss24k")
 wall_material = SubResource("StandardMaterial3D_u67mo")
 
 [node name="MeshInstance3D2" type="MeshInstance3D" parent="."]

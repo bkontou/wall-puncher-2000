@@ -5,6 +5,9 @@ using System.Numerics;
 public partial class Score : Node
 {
 	[Export]
+	Callable wall_destroyed_signal;
+
+	[Export]
 	public Label score_label;
 	[Export]
 	public Label timer_label;
@@ -27,7 +30,9 @@ public partial class Score : Node
 		{
 			_total_score = value;
 			score_label.Text = "SCORE: " + _total_score.ToString().PadRight(2) + " / " + _max_score.ToString();
-			game_score_arm.RotationDegrees = new Godot.Vector3(0f, Mathf.Lerp(171, -171, total_score / max_score), 0f);
+			//game_score_arm.RotateX(0.1f);
+			//game_score_arm.RotationDegrees = new Godot.Vector3(0, Mathf.Lerp(-180, 180, (_total_score / _max_score - 1)), 0);
+			game_score_arm.RotationDegrees = new Godot.Vector3(0f, Mathf.Lerp(171, -171, _total_score / _max_score), 0f);
 		}
 	}
 
@@ -41,7 +46,7 @@ public partial class Score : Node
 	public override void _Ready()
 	{
 
-		total_score = 0;
+		//total_score = 0;
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -61,8 +66,9 @@ public partial class Score : Node
 	{
 		max_score = 0;
 		foreach (Wall wall in wall_nodes.GetChildren()) {
-			GD.Print("child");
 			max_score += wall.getWallArea();
+			// connect wall signal
+			wall.Connect(Wall.SignalName.onWallFragmentDestroyed, new Callable(this, MethodName._on_wall_fragment_destroyed));
 		}
 		max_score = max_score * (1 - score_leeway);
 
