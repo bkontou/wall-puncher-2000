@@ -1,11 +1,12 @@
-[gd_scene load_steps=3 format=3 uid="uid://hjtwj2thn54v"]
+[gd_scene load_steps=4 format=3 uid="uid://hjtwj2thn54v"]
 
 [ext_resource type="Script" path="res://Scripts/StartScreen.cs" id="1_e1rfd"]
 [ext_resource type="PackedScene" uid="uid://br52cec17ytdt" path="res://Levels/level_01.tscn" id="2_32vg5"]
+[ext_resource type="PackedScene" uid="uid://ur1y6k1ae2e7" path="res://Levels/level_02.tscn" id="3_2xjia"]
 
 [node name="StartScreen" type="Node3D" node_paths=PackedStringArray("loading_screen", "start_timer")]
 script = ExtResource("1_e1rfd")
-levels = Array[PackedScene]([ExtResource("2_32vg5")])
+levels = Array[PackedScene]([ExtResource("2_32vg5"), ExtResource("3_2xjia")])
 loading_screen = NodePath("Control/LoadingScreen")
 start_timer = NodePath("Control/StartTimer")
 

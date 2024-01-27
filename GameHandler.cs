@@ -3,8 +3,8 @@ using System;
 
 public partial class GameHandler : Node
 {
-	[Export]
-	public PackedScene next_level;
+	[Export(PropertyHint.File, "*.tscn")]
+	public String next_level;
 
 	[Export]
 	public PC pc;
@@ -24,8 +24,8 @@ public partial class GameHandler : Node
 	[Export]
 	public Label countdown_label;
 
-	[Export]
-	public PackedScene main_menu;
+	[Export(PropertyHint.File)]
+	public String main_menu;
 
 	private bool paused = false;
 	private bool game_finished = false;
@@ -102,16 +102,16 @@ public partial class GameHandler : Node
 
 	public void _on_quit_button_pressed()
 	{
-		GetTree().ChangeSceneToPacked(main_menu);
+		GetTree().ChangeSceneToFile(main_menu);
 	}
 
 	public void _on_next_level_button_pressed()
 	{
 		if (next_level == null) {
-			GetTree().ChangeSceneToPacked(main_menu);
+			GetTree().ChangeSceneToFile(main_menu);
 		} else
 		{
-			GetTree().ChangeSceneToPacked(next_level);
+			GetTree().ChangeSceneToFile(next_level);
 		}
 	}
 

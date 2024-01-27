@@ -1,7 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://br52cec17ytdt"]
+[gd_scene load_steps=6 format=3 uid="uid://br52cec17ytdt"]
 
 [ext_resource type="PackedScene" uid="uid://pna4pvcttmyo" path="res://level.tscn" id="1_yjibj"]
-[ext_resource type="PackedScene" uid="uid://ur1y6k1ae2e7" path="res://Levels/level_02.tscn" id="2_5gahk"]
 [ext_resource type="JSON" path="res://Levels/maps/level_01.json" id="2_tlhir"]
 [ext_resource type="Texture2D" uid="uid://betfmwvsuydmr" path="res://Images/door1.png" id="3_stai1"]
 [ext_resource type="PackedScene" uid="uid://c5m7ej32e8qab" path="res://Objects/bed.tscn" id="4_d6pf8"]
@@ -15,7 +14,7 @@ size = Vector3(2.98039, 5.00847, 2.11108)
 transform = Transform3D(0.940608, 0, 0.339493, 0, 1, 0, -0.339493, 0, 0.940608, 0.0606585, 1.49139, 2.71135)
 
 [node name="GameHandler" parent="." index="4"]
-next_level = ExtResource("2_5gahk")
+next_level = "res://Levels/level_02.tscn"
 
 [node name="WallMap" parent="." index="9"]
 walls_data = ExtResource("2_tlhir")
