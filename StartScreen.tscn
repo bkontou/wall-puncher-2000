@@ -4,10 +4,13 @@
 [ext_resource type="PackedScene" uid="uid://br52cec17ytdt" path="res://Levels/level_01.tscn" id="2_32vg5"]
 [ext_resource type="PackedScene" uid="uid://ur1y6k1ae2e7" path="res://Levels/level_02.tscn" id="3_2xjia"]
 
-[node name="StartScreen" type="Node3D" node_paths=PackedStringArray("loading_screen", "start_timer")]
+[node name="StartScreen" type="Node3D" node_paths=PackedStringArray("loading_screen", "level_select", "levels_list", "main_menu_buttons", "start_timer")]
 script = ExtResource("1_e1rfd")
 levels = Array[PackedScene]([ExtResource("2_32vg5"), ExtResource("3_2xjia")])
 loading_screen = NodePath("Control/LoadingScreen")
+level_select = NodePath("Control/LevelSelect")
+levels_list = NodePath("Control/LevelSelect/VBoxContainer")
+main_menu_buttons = NodePath("Control/VBoxContainer")
 start_timer = NodePath("Control/StartTimer")
 
 [node name="Control" type="Control" parent="."]
@@ -53,6 +56,31 @@ text = "Start"
 layout_mode = 2
 text = "Quit"
 
+[node name="LevelSelect" type="Control" parent="Control"]
+visible = false
+layout_mode = 1
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_top = 197.0
+offset_bottom = -97.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/LevelSelect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="BackButton" type="Button" parent="Control/LevelSelect/VBoxContainer"]
+layout_mode = 2
+text = "BACK
+"
+
 [node name="LoadingScreen" type="Control" parent="Control"]
 visible = false
 layout_mode = 1
@@ -87,7 +115,9 @@ text = "BUILDING WALLS..."
 
 [node name="StartTimer" type="Timer" parent="Control"]
 wait_time = 0.25
+one_shot = true
 
 [connection signal="pressed" from="Control/VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
 [connection signal="pressed" from="Control/VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]
+[connection signal="pressed" from="Control/LevelSelect/VBoxContainer/BackButton" to="." method="_on_back_button_pressed"]
 [connection signal="timeout" from="Control/StartTimer" to="." method="_on_start_timer_timeout"]

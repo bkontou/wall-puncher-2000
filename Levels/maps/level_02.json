@@ -5,14 +5,14 @@
 			"cap_start": false,
 			"double_sided": true,
 			"position_end": [
-				10,
+				8,
 				0,
-				-10
+				-8
 			],
 			"position_start": [
-				10,
+				8,
 				0,
-				8
+				6
 			]
 		},
 		{
@@ -20,14 +20,14 @@
 			"cap_start": false,
 			"double_sided": true,
 			"position_end": [
-				10,
+				8,
 				0,
-				8
+				6
 			],
 			"position_start": [
-				-10,
+				-8,
 				0,
-				8
+				6
 			]
 		},
 		{
@@ -35,14 +35,14 @@
 			"cap_start": false,
 			"double_sided": true,
 			"position_end": [
-				-10,
+				-8,
 				0,
-				8
+				6
 			],
 			"position_start": [
-				-10,
+				-8,
 				0,
-				-10
+				-8
 			]
 		},
 		{
@@ -50,14 +50,14 @@
 			"cap_start": false,
 			"double_sided": true,
 			"position_end": [
-				-10,
+				-8,
 				0,
-				-10
+				-8
 			],
 			"position_start": [
-				10,
+				8,
 				0,
-				-10
+				-8
 			]
 		},
 		{
@@ -67,7 +67,7 @@
 			"position_end": [
 				0,
 				0,
-				-10
+				-8
 			],
 			"position_start": [
 				0,

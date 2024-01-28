@@ -99,5 +99,6 @@ debug_shape_custom_color = Color(1, 0, 1, 1)
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("3_8l5uv")
+volume_db = -3.048
 
 [connection signal="timeout" from="Camera3D/PCFist/FistTimer" to="." method="_on_fist_timer_timeout"]

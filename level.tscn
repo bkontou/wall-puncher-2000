@@ -94,7 +94,7 @@ shape = SubResource("ConcavePolygonShape3D_4qmu8")
 [node name="PC" parent="." instance=ExtResource("5_0v5mo")]
 transform = Transform3D(-0.98173, 0, -0.190278, 0, 1, 0, 0.190278, 0, -0.98173, 0.150396, 1.49139, -4.51856)
 
-[node name="GameHandler" type="Node" parent="." node_paths=PackedStringArray("pc", "start_timer", "game_timer", "cooldown_timer", "timer_arm", "end_screen", "countdown_screen", "countdown_label")]
+[node name="GameHandler" type="Node" parent="." node_paths=PackedStringArray("pc", "start_timer", "game_timer", "cooldown_timer", "timer_arm", "end_screen", "countdown_screen", "countdown_label", "final_stats", "game_score")]
 process_mode = 3
 script = ExtResource("6_gpcuy")
 pc = NodePath("../PC")
@@ -105,6 +105,8 @@ timer_arm = NodePath("../Clock/ClockArm")
 end_screen = NodePath("../Control/FinalStats")
 countdown_screen = NodePath("../Control/Countdown")
 countdown_label = NodePath("../Control/Countdown/Label")
+final_stats = NodePath("../Control/FinalStats/VBoxContainer/InfoLabel")
+game_score = NodePath("../Score")
 main_menu = "res://StartScreen.tscn"
 
 [node name="LevelTimer" type="Timer" parent="GameHandler"]
@@ -141,6 +143,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="ScoreLabel" type="Label" parent="Control"]
+visible = false
 layout_mode = 0
 offset_left = 12.0
 offset_top = 11.0
@@ -268,9 +271,10 @@ label_settings = SubResource("LabelSettings_l6mwt")
 horizontal_alignment = 1
 uppercase = true
 
-[node name="Label2" type="RichTextLabel" parent="Control/FinalStats/VBoxContainer"]
+[node name="InfoLabel" type="RichTextLabel" parent="Control/FinalStats/VBoxContainer"]
 layout_mode = 2
-text = "Walls Punched:
+text = "Walls Punched: {0}%
+
 "
 fit_content = true
 

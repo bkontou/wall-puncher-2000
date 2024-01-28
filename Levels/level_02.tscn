@@ -1,7 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://ur1y6k1ae2e7"]
+[gd_scene load_steps=5 format=3 uid="uid://ur1y6k1ae2e7"]
 
 [ext_resource type="PackedScene" uid="uid://pna4pvcttmyo" path="res://level.tscn" id="1_58i7b"]
 [ext_resource type="JSON" path="res://Levels/maps/level_02.json" id="2_y0ul7"]
+[ext_resource type="Texture2D" uid="uid://betfmwvsuydmr" path="res://Images/door1.png" id="3_46itg"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_an2o5"]
+size = Vector3(2.98039, 5.00847, 2.11108)
 
 [node name="Level" instance=ExtResource("1_58i7b")]
 
@@ -13,3 +17,18 @@ wait_time = 25.0
 
 [node name="WallMap" parent="." index="9"]
 walls_data = ExtResource("2_y0ul7")
+
+[node name="Door2" type="Sprite3D" parent="." index="10"]
+transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 4.64495, 1.5411, -7.70061)
+modulate = Color(0.945098, 0.956863, 0.980392, 1)
+shaded = true
+texture_filter = 0
+texture = ExtResource("3_46itg")
+
+[node name="Area3D" type="Area3D" parent="Door2" index="0"]
+collision_layer = 4
+collision_mask = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Door2/Area3D" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0258865, 0.1325, 0.393186)
+shape = SubResource("BoxShape3D_an2o5")

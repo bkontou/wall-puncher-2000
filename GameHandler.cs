@@ -23,6 +23,10 @@ public partial class GameHandler : Node
 	public Control countdown_screen;
 	[Export]
 	public Label countdown_label;
+	[Export]
+	public RichTextLabel final_stats;
+	[Export]
+	public Score game_score;
 
 	[Export(PropertyHint.File)]
 	public String main_menu;
@@ -90,6 +94,8 @@ public partial class GameHandler : Node
 		game_finished = true;
 		end_screen.Visible = true;
 		Input.MouseMode = Input.MouseModeEnum.Visible;
+
+		final_stats.Text = String.Format(final_stats.Text, 100f * (game_score.total_score / game_score.max_score));
 	}
 
 	public void _on_start_timer_timeout()
