@@ -1,0 +1,28 @@
+[gd_scene load_steps=6 format=3 uid="uid://jfvc1dyd0cl7"]
+
+[ext_resource type="PackedScene" uid="uid://d2eybo1aplr7e" path="res://Abilities/AbilityBase.tscn" id="1_nlpqs"]
+[ext_resource type="Script" path="res://Abilities/FuryPunch.cs" id="2_sv2dc"]
+[ext_resource type="PackedScene" uid="uid://dlw2g4axd1gf1" path="res://Abilities/AbilityObjs/Explosion.tscn" id="3_xbf8v"]
+[ext_resource type="Texture2D" uid="uid://ru6fpwarhctk" path="res://Images/fury_punch_icon.png" id="4_a2lor"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_nfilv"]
+radius = 0.732008
+
+[node name="FuryPunch" node_paths=PackedStringArray("raycast") instance=ExtResource("1_nlpqs")]
+script = ExtResource("2_sv2dc")
+destruction_radius = 3.5
+explosion_knockback = 26.5
+raycast = NodePath("RayCast3D")
+explosion_scene = ExtResource("3_xbf8v")
+ability_image = ExtResource("4_a2lor")
+
+[node name="AbilityTimer" parent="." index="0"]
+wait_time = 7.5
+
+[node name="RayCast3D" type="RayCast3D" parent="." index="1"]
+target_position = Vector3(0, 0, -2)
+
+[node name="DestructionArea" type="Area3D" parent="." index="2"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DestructionArea" index="0"]
+shape = SubResource("SphereShape3D_nfilv")

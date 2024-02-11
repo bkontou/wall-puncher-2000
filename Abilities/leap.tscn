@@ -1,0 +1,9 @@
+[gd_scene load_steps=4 format=3 uid="uid://da7jfhfqx6xnv"]
+
+[ext_resource type="PackedScene" uid="uid://d2eybo1aplr7e" path="res://Abilities/AbilityBase.tscn" id="1_qfc0x"]
+[ext_resource type="Script" path="res://Abilities/Leap.cs" id="2_gveh6"]
+[ext_resource type="Texture2D" uid="uid://d0w0t0dsfdvgt" path="res://Images/leap_icon.png" id="3_tn1qh"]
+
+[node name="Leap" instance=ExtResource("1_qfc0x")]
+script = ExtResource("2_gveh6")
+ability_image = ExtResource("3_tn1qh")

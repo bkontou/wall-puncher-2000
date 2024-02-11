@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=3 uid="uid://cyb8yn7n1n6p4"]
+
+[ext_resource type="Script" path="res://ItemSelector.cs" id="1_feiyp"]
+[ext_resource type="Texture2D" uid="uid://b038hjwe6bp7i" path="res://Images/carpet.png" id="2_0qry6"]
+[ext_resource type="Texture2D" uid="uid://bggivy3wq6a48" path="res://Images/object_locked.png" id="3_p1clf"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dh5mr"]
+size = Vector2(52, 52)
+
+[node name="ItemSelector" type="Node2D" node_paths=PackedStringArray("item_lock_overlay")]
+scale = Vector2(1.5, 1.5)
+script = ExtResource("1_feiyp")
+item_scene = "res://Abilities/leap.tscn"
+item_lock_overlay = NodePath("LockedSprite")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("2_0qry6")
+
+[node name="LockedSprite" type="Sprite2D" parent="."]
+visible = false
+z_index = 1
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("3_p1clf")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_dh5mr")
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="area_exited" from="Area2D" to="." method="_on_area_2d_area_exited"]
+[connection signal="input_event" from="Area2D" to="." method="_on_area_2d_input_event"]

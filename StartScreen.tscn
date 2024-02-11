@@ -1,17 +1,32 @@
-[gd_scene load_steps=4 format=3 uid="uid://hjtwj2thn54v"]
+[gd_scene load_steps=15 format=3 uid="uid://hjtwj2thn54v"]
 
 [ext_resource type="Script" path="res://Scripts/StartScreen.cs" id="1_e1rfd"]
 [ext_resource type="PackedScene" uid="uid://br52cec17ytdt" path="res://Levels/level_01.tscn" id="2_32vg5"]
-[ext_resource type="PackedScene" uid="uid://ur1y6k1ae2e7" path="res://Levels/level_02.tscn" id="3_2xjia"]
+[ext_resource type="PackedScene" uid="uid://b134alimvtt1c" path="res://Levels/level_02.tscn" id="3_2xjia"]
+[ext_resource type="PackedScene" uid="uid://ur1y6k1ae2e7" path="res://Levels/level_03.tscn" id="4_i2w8h"]
+[ext_resource type="PackedScene" uid="uid://inm5m7yvds76" path="res://Levels/level_04.tscn" id="5_h61kj"]
+[ext_resource type="Texture2D" uid="uid://c0q4vg1b8a318" path="res://Images/fists_item_image.png" id="5_td2sd"]
+[ext_resource type="Texture2D" uid="uid://tkri85y13luy" path="res://Images/item_placement_image.png" id="6_5tjte"]
+[ext_resource type="PackedScene" uid="uid://cyb8yn7n1n6p4" path="res://item_selector.tscn" id="6_shrsy"]
+[ext_resource type="Texture2D" uid="uid://d0w0t0dsfdvgt" path="res://Images/leap_icon.png" id="8_1y5gc"]
+[ext_resource type="Texture2D" uid="uid://ddvoxyg7ds638" path="res://Images/kick_icon.png" id="9_07068"]
+[ext_resource type="Texture2D" uid="uid://b2j1hc2i3uu42" path="res://Images/wall_phase_icon.png" id="10_mku37"]
+[ext_resource type="Texture2D" uid="uid://ru6fpwarhctk" path="res://Images/fury_punch_icon.png" id="11_yqkg1"]
+[ext_resource type="Texture2D" uid="uid://qpoevbgm1g6r" path="res://Images/mind_punch_icon.png" id="12_pq8ou"]
 
-[node name="StartScreen" type="Node3D" node_paths=PackedStringArray("loading_screen", "level_select", "levels_list", "main_menu_buttons", "start_timer")]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_et2go"]
+size = Vector2(57, 56)
+
+[node name="StartScreen" type="Node3D" node_paths=PackedStringArray("loading_screen", "level_select", "ability_select", "levels_list", "main_menu_buttons", "start_timer", "item_list")]
 script = ExtResource("1_e1rfd")
-levels = Array[PackedScene]([ExtResource("2_32vg5"), ExtResource("3_2xjia")])
+levels = Array[PackedScene]([ExtResource("2_32vg5"), ExtResource("3_2xjia"), ExtResource("4_i2w8h"), ExtResource("5_h61kj")])
 loading_screen = NodePath("Control/LoadingScreen")
 level_select = NodePath("Control/LevelSelect")
+ability_select = NodePath("Control/UpgradePanel")
 levels_list = NodePath("Control/LevelSelect/VBoxContainer")
 main_menu_buttons = NodePath("Control/VBoxContainer")
 start_timer = NodePath("Control/StartTimer")
+item_list = NodePath("Control/UpgradePanel/ItemList")
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
@@ -20,6 +35,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
 
 [node name="Label" type="Label" parent="Control"]
 layout_mode = 1
@@ -51,6 +67,10 @@ grow_vertical = 0
 [node name="StartButton" type="Button" parent="Control/VBoxContainer"]
 layout_mode = 2
 text = "Start"
+
+[node name="Upgrades" type="Button" parent="Control/VBoxContainer"]
+layout_mode = 2
+text = "Upgrades"
 
 [node name="QuitButton" type="Button" parent="Control/VBoxContainer"]
 layout_mode = 2
@@ -89,6 +109,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
 
 [node name="Panel" type="Panel" parent="Control/LoadingScreen"]
 layout_mode = 1
@@ -113,11 +134,230 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "BUILDING WALLS..."
 
+[node name="UpgradePanel" type="Control" parent="Control"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="Panel" type="Panel" parent="Control/UpgradePanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/UpgradePanel"]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -268.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="FistsImage" type="TextureRect" parent="Control/UpgradePanel"]
+layout_mode = 0
+offset_left = 14.0
+offset_top = 21.0
+offset_right = 713.0
+offset_bottom = 462.0
+texture = ExtResource("5_td2sd")
+expand_mode = 1
+
+[node name="BackButton" type="Button" parent="Control/UpgradePanel"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -24.0
+offset_top = -62.0
+offset_right = 26.0
+offset_bottom = -31.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "BACK
+"
+
+[node name="ItemPlacement1" type="Control" parent="Control/UpgradePanel"]
+anchors_preset = 0
+offset_left = 5.0
+offset_top = 9.0
+offset_right = 45.0
+offset_bottom = 49.0
+mouse_filter = 1
+
+[node name="ItemPlacement1" type="TextureRect" parent="Control/UpgradePanel/ItemPlacement1"]
+modulate = Color(1, 1, 1, 0.784314)
+layout_mode = 0
+offset_left = 137.0
+offset_top = 261.0
+offset_right = 201.0
+offset_bottom = 324.0
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("6_5tjte")
+expand_mode = 1
+
+[node name="Item1Area" type="Area2D" parent="Control/UpgradePanel/ItemPlacement1/ItemPlacement1"]
+position = Vector2(31.3333, 30.6667)
+scale = Vector2(0.666667, 0.666667)
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Control/UpgradePanel/ItemPlacement1/ItemPlacement1/Item1Area"]
+shape = SubResource("RectangleShape2D_et2go")
+
+[node name="Label" type="Label" parent="Control/UpgradePanel/ItemPlacement1"]
+layout_mode = 0
+offset_left = 152.0
+offset_top = 358.5
+offset_right = 196.0
+offset_bottom = 381.5
+text = "SHIFT"
+
+[node name="ItemPlacement2" type="Control" parent="Control/UpgradePanel"]
+anchors_preset = 0
+offset_left = 115.0
+offset_top = 50.0
+offset_right = 155.0
+offset_bottom = 90.0
+mouse_filter = 1
+
+[node name="ItemPlacement2" type="TextureRect" parent="Control/UpgradePanel/ItemPlacement2"]
+modulate = Color(1, 1, 1, 0.784314)
+layout_mode = 0
+offset_left = 360.0
+offset_top = 222.0
+offset_right = 424.0
+offset_bottom = 285.0
+scale = Vector2(1.49314, 1.5)
+texture = ExtResource("6_5tjte")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="Control/UpgradePanel/ItemPlacement2/ItemPlacement2"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 65.0
+offset_right = 54.0
+offset_bottom = 88.0
+text = "E"
+horizontal_alignment = 1
+
+[node name="Item2Area" type="Area2D" parent="Control/UpgradePanel/ItemPlacement2"]
+position = Vector2(409, 269)
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Control/UpgradePanel/ItemPlacement2/Item2Area"]
+shape = SubResource("RectangleShape2D_et2go")
+
+[node name="ItemList" type="Node2D" parent="Control/UpgradePanel"]
+position = Vector2(1043, 112)
+
+[node name="ItemLeap" parent="Control/UpgradePanel/ItemList" node_paths=PackedStringArray("item_shift_area", "item_e_area", "item_info_label") instance=ExtResource("6_shrsy")]
+position = Vector2(-76, -28)
+unlocked = false
+item_shift_area = NodePath("../../ItemPlacement1/ItemPlacement1/Item1Area")
+item_e_area = NodePath("../../ItemPlacement2/Item2Area")
+item_info_label = NodePath("../../ItemInfo")
+item_name = "Leap"
+item_description = "A great leap forward to bring you closer to walls to punch"
+item_image = ExtResource("8_1y5gc")
+
+[node name="ItemKick" parent="Control/UpgradePanel/ItemList" node_paths=PackedStringArray("item_shift_area", "item_e_area", "item_info_label") instance=ExtResource("6_shrsy")]
+position = Vector2(-166, -28)
+unlocked = false
+item_shift_area = NodePath("../../ItemPlacement1/ItemPlacement1/Item1Area")
+item_e_area = NodePath("../../ItemPlacement2/Item2Area")
+item_info_label = NodePath("../../ItemInfo")
+item_scene = "res://Abilities/kick_ability.tscn"
+item_name = "Kick"
+item_description = "A low kick that will strike fear in drywall"
+item_image = ExtResource("9_07068")
+
+[node name="ItemWallPhase" parent="Control/UpgradePanel/ItemList" node_paths=PackedStringArray("item_shift_area", "item_e_area", "item_info_label", "item_lock_overlay") instance=ExtResource("6_shrsy")]
+position = Vector2(-166, 63)
+unlocked = false
+item_shift_area = NodePath("../../ItemPlacement1/ItemPlacement1/Item1Area")
+item_e_area = NodePath("../../ItemPlacement2/Item2Area")
+item_info_label = NodePath("../../ItemInfo")
+item_scene = "res://Abilities/wall_phase.tscn"
+item_name = "Wall Phase"
+item_description = "Phase through walls"
+item_image = ExtResource("10_mku37")
+item_lock_overlay = NodePath("../ItemKick/LockedSprite")
+
+[node name="ItemFuryPunch" parent="Control/UpgradePanel/ItemList" node_paths=PackedStringArray("item_shift_area", "item_e_area", "item_info_label", "item_lock_overlay") instance=ExtResource("6_shrsy")]
+position = Vector2(-75, 61)
+unlocked = false
+item_shift_area = NodePath("../../ItemPlacement1/ItemPlacement1/Item1Area")
+item_e_area = NodePath("../../ItemPlacement2/Item2Area")
+item_info_label = NodePath("../../ItemInfo")
+item_scene = "res://Abilities/kick_ability.tscn"
+item_name = "Fury Punch"
+item_description = "Deliver a powerful punch that deals large amounts of damage"
+item_image = ExtResource("11_yqkg1")
+item_lock_overlay = NodePath("../ItemKick/LockedSprite")
+
+[node name="ItemMindPunch" parent="Control/UpgradePanel/ItemList" node_paths=PackedStringArray("item_shift_area", "item_e_area", "item_info_label", "item_lock_overlay") instance=ExtResource("6_shrsy")]
+position = Vector2(-170, 159)
+unlocked = false
+item_shift_area = NodePath("../../ItemPlacement1/ItemPlacement1/Item1Area")
+item_e_area = NodePath("../../ItemPlacement2/Item2Area")
+item_info_label = NodePath("../../ItemInfo")
+item_scene = "res://Abilities/mind_punch.tscn"
+item_name = "Mind Punch"
+item_description = "Fire a projectile fist through the power of your mind"
+item_image = ExtResource("12_pq8ou")
+item_lock_overlay = NodePath("../ItemKick/LockedSprite")
+
+[node name="ItemInfo" type="RichTextLabel" parent="Control/UpgradePanel"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1125.0
+offset_top = -173.0
+offset_right = -621.0
+offset_bottom = -19.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "Item Info"
+
+[node name="UnlockButton" type="Button" parent="Control/UpgradePanel"]
+visible = false
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 168.0
+offset_top = -60.0
+offset_right = 243.0
+offset_bottom = -29.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "UNLOCK"
+
 [node name="StartTimer" type="Timer" parent="Control"]
 wait_time = 0.25
 one_shot = true
 
 [connection signal="pressed" from="Control/VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="Control/VBoxContainer/Upgrades" to="." method="_on_upgrade_button_pressed"]
 [connection signal="pressed" from="Control/VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]
 [connection signal="pressed" from="Control/LevelSelect/VBoxContainer/BackButton" to="." method="_on_back_button_pressed"]
+[connection signal="pressed" from="Control/UpgradePanel/BackButton" to="." method="_on_ability_back_button_pressed"]
 [connection signal="timeout" from="Control/StartTimer" to="." method="_on_start_timer_timeout"]

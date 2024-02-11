@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://bso55e4khxafj"]
+
+[ext_resource type="PackedScene" uid="uid://cbc61t3vt6trn" path="res://Objects/fist_projectile.tscn" id="1_qxii6"]
+[ext_resource type="Script" path="res://Abilities/AbilityObjs/PunchProjectile.cs" id="1_wmcan"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_0n501"]
+radius = 0.919412
+
+[node name="PunchProjectile" type="Node3D"]
+script = ExtResource("1_wmcan")
+
+[node name="fist" parent="." instance=ExtResource("1_qxii6")]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+
+[node name="Area3D" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.469687)
+collision_layer = 3
+collision_mask = 3
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("SphereShape3D_0n501")
+
+[node name="KillTimer" type="Timer" parent="."]
+wait_time = 15.0
+one_shot = true
+
+[connection signal="area_entered" from="Area3D" to="." method="_on_area_3d_area_entered"]
+[connection signal="timeout" from="KillTimer" to="." method="_on_kill_timer_timeout"]

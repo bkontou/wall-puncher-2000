@@ -29,6 +29,10 @@ public partial class Wall : Node3D
 	public bool cap_start_wall = false;
 	[Export]
 	public bool cap_end_wall = false;
+	[Export]
+	public bool corner_start = true;
+	[Export]
+	public bool corner_end = true;
 
 	public float wall_collision_padding = 1f;
 
@@ -277,5 +281,17 @@ public partial class Wall : Node3D
 		cap_mesh.Position = new Vector3(-0.5f * wall_width, 0, 0);
 
 		AddChild(cap_mesh);
+	}
+
+	private void addCornerStart()
+	{
+		MeshInstance3D corner_mesh = new MeshInstance3D();
+		corner_mesh.Mesh = new PlaneMesh();
+		corner_mesh.Mesh.SurfaceSetMaterial(0, wall_material);
+		corner_mesh.Mesh.Set("size", new Vector2(0.5f * wall_thickness, wall_height));
+		corner_mesh.RotationDegrees = new Vector3(-90, 0, 0);
+		corner_mesh.Position = new Vector3(0.5f * wall_width + 0.25f * wall_thickness, 0, -0.5f * wall_thickness);
+
+		AddChild(corner_mesh);
 	}
 }

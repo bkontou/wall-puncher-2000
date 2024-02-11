@@ -1,0 +1,12 @@
+[gd_scene load_steps=5 format=3 uid="uid://cctwdyfr4mjgr"]
+
+[ext_resource type="PackedScene" uid="uid://d2eybo1aplr7e" path="res://Abilities/AbilityBase.tscn" id="1_5o6u8"]
+[ext_resource type="Script" path="res://Abilities/MindPunch.cs" id="2_stlvw"]
+[ext_resource type="PackedScene" uid="uid://bso55e4khxafj" path="res://Abilities/AbilityObjs/PunchProjectile.tscn" id="3_fev84"]
+[ext_resource type="Texture2D" uid="uid://qpoevbgm1g6r" path="res://Images/mind_punch_icon.png" id="4_cytgc"]
+
+[node name="MindPunch" instance=ExtResource("1_5o6u8")]
+script = ExtResource("2_stlvw")
+punch_projectile_scene = ExtResource("3_fev84")
+projectile_speed = 50.0
+ability_image = ExtResource("4_cytgc")

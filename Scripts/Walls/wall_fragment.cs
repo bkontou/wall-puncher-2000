@@ -65,15 +65,17 @@ public partial class wall_fragment : Node3D
 
 	public void _on_area_3d_area_entered(Area3D area)
 	{
-		Vector3 hit_dir = area.GlobalBasis * Vector3.Forward;
+		Vector3 hit_dir = area.GlobalPosition.DirectionTo(GlobalPosition);
+		 
+		// Vector3 hit_dir = area.GlobalBasis * Vector3.Forward;
 		if (hit_dir.Dot(triangleNormal) > 0) {
 			return;
 		}
 
 		wall_particles.Emitting = true;
 		array_mesh.Visible = false;
-		wall_sfx.PitchScale = new RandomNumberGenerator().RandfRange(0.8f, 1.2f);
-		wall_sfx.Play();
+		// wall_sfx.PitchScale = new RandomNumberGenerator().RandfRange(0.8f, 1.2f);
+		// wall_sfx.Play();
 		//area.SetDeferred("monitorable", false);
 		collision_polygon.SetDeferred("disabled", true);
 		EmitSignal(SignalName.onWallDestroy, getFragmentArea());

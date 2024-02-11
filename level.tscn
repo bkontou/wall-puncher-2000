@@ -1,9 +1,10 @@
-[gd_scene load_steps=24 format=3 uid="uid://pna4pvcttmyo"]
+[gd_scene load_steps=25 format=3 uid="uid://pna4pvcttmyo"]
 
 [ext_resource type="Texture2D" uid="uid://b038hjwe6bp7i" path="res://Images/carpet.png" id="2_atad3"]
 [ext_resource type="Texture2D" uid="uid://bngjjy2nds2lj" path="res://Images/ceiling.png" id="4_idwgf"]
 [ext_resource type="PackedScene" uid="uid://b0nfjgbtk1hof" path="res://pc.tscn" id="5_0v5mo"]
 [ext_resource type="Script" path="res://Scripts/Score.cs" id="5_s7tqs"]
+[ext_resource type="Texture2D" uid="uid://ct3sddhifd2hq" path="res://Images/x_image.png" id="6_aydjx"]
 [ext_resource type="Script" path="res://GameHandler.cs" id="6_gpcuy"]
 [ext_resource type="PackedScene" uid="uid://dsm47d1vxmg3" path="res://Objects/PressureGauge.tscn" id="8_6dee1"]
 [ext_resource type="PackedScene" uid="uid://ml61878bduvl" path="res://Objects/clock.tscn" id="9_gymde"]
@@ -94,7 +95,7 @@ shape = SubResource("ConcavePolygonShape3D_4qmu8")
 [node name="PC" parent="." instance=ExtResource("5_0v5mo")]
 transform = Transform3D(-0.98173, 0, -0.190278, 0, 1, 0, 0.190278, 0, -0.98173, 0.150396, 1.49139, -4.51856)
 
-[node name="GameHandler" type="Node" parent="." node_paths=PackedStringArray("pc", "start_timer", "game_timer", "cooldown_timer", "timer_arm", "end_screen", "countdown_screen", "countdown_label", "final_stats", "game_score")]
+[node name="GameHandler" type="Node" parent="." node_paths=PackedStringArray("pc", "start_timer", "game_timer", "cooldown_timer", "timer_arm", "end_screen", "countdown_screen", "countdown_label", "final_stats", "game_score", "abiltiy_e_cooldown", "ability_shift_cooldown", "ability_e_texture", "ability_shift_texture")]
 process_mode = 3
 script = ExtResource("6_gpcuy")
 pc = NodePath("../PC")
@@ -107,6 +108,10 @@ countdown_screen = NodePath("../Control/Countdown")
 countdown_label = NodePath("../Control/Countdown/Label")
 final_stats = NodePath("../Control/FinalStats/VBoxContainer/InfoLabel")
 game_score = NodePath("../Score")
+abiltiy_e_cooldown = NodePath("../Control/AbilityInfo/AbilityE/Ability1Cooldown")
+ability_shift_cooldown = NodePath("../Control/AbilityInfo/AbilityShift/Ability2Cooldown")
+ability_e_texture = NodePath("../Control/AbilityInfo/AbilityE/TextureRect")
+ability_shift_texture = NodePath("../Control/AbilityInfo/AbilityShift/TextureRect")
 main_menu = "res://StartScreen.tscn"
 
 [node name="LevelTimer" type="Timer" parent="GameHandler"]
@@ -296,6 +301,39 @@ text = "Restart"
 custom_minimum_size = Vector2(150, 50)
 layout_mode = 2
 text = "Next Level"
+
+[node name="AbilityInfo" type="VBoxContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -58.0
+offset_right = 461.0
+grow_vertical = 0
+
+[node name="AbilityE" type="HBoxContainer" parent="Control/AbilityInfo"]
+layout_mode = 2
+
+[node name="Ability1Cooldown" type="ProgressBar" parent="Control/AbilityInfo/AbilityE"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TextureRect" type="TextureRect" parent="Control/AbilityInfo/AbilityE"]
+layout_mode = 2
+texture = ExtResource("6_aydjx")
+expand_mode = 2
+
+[node name="AbilityShift" type="HBoxContainer" parent="Control/AbilityInfo"]
+layout_mode = 2
+
+[node name="Ability2Cooldown" type="ProgressBar" parent="Control/AbilityInfo/AbilityShift"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TextureRect" type="TextureRect" parent="Control/AbilityInfo/AbilityShift"]
+layout_mode = 2
+texture = ExtResource("6_aydjx")
+expand_mode = 2
 
 [node name="Destructometer" type="Node3D" parent="."]
 transform = Transform3D(-0.5, 0, 7.54979e-08, 0, 0.5, 0, -7.54979e-08, 0, -0.5, -3.48407, -3.25158, 0.160704)

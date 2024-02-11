@@ -1,0 +1,176 @@
+{
+	"walls": [
+		{
+			"cap_end": true,
+			"cap_start": true,
+			"double_sided": true,
+			"position_end": [
+				6,
+				0,
+				0
+			],
+			"position_start": [
+				6,
+				0,
+				6
+			]
+		},
+		{
+			"cap_end": false,
+			"cap_start": false,
+			"double_sided": false,
+			"position_end": [
+				6,
+				0,
+				6
+			],
+			"position_start": [
+				0,
+				0,
+				6
+			]
+		},
+		{
+			"cap_end": false,
+			"cap_start": false,
+			"double_sided": false,
+			"position_end": [
+				0,
+				0,
+				6
+			],
+			"position_start": [
+				0,
+				0,
+				2
+			]
+		},
+		{
+			"cap_end": false,
+			"cap_start": false,
+			"double_sided": false,
+			"position_end": [
+				0,
+				0,
+				2
+			],
+			"position_start": [
+				-4,
+				0,
+				2
+			]
+		},
+		{
+			"cap_end": false,
+			"cap_start": false,
+			"double_sided": false,
+			"position_end": [
+				-4,
+				0,
+				2
+			],
+			"position_start": [
+				-4,
+				0,
+				-2
+			]
+		},
+		{
+			"cap_end": false,
+			"cap_start": false,
+			"double_sided": false,
+			"position_end": [
+				-4,
+				0,
+				2
+			],
+			"position_start": [
+				-4,
+				0,
+				-2
+			]
+		},
+		{
+			"cap_end": true,
+			"cap_start": true,
+			"double_sided": true,
+			"position_end": [
+				-4,
+				0,
+				-2
+			],
+			"position_start": [
+				2,
+				0,
+				-2
+			]
+		},
+		{
+			"cap_end": false,
+			"cap_start": false,
+			"double_sided": false,
+			"position_end": [
+				-4,
+				0,
+				-2
+			],
+			"position_start": [
+				-4,
+				0,
+				-6
+			]
+		},
+		{
+			"cap_end": false,
+			"cap_start": false,
+			"double_sided": false,
+			"position_end": [
+				-4,
+				0,
+				-6
+			],
+			"position_start": [
+				12,
+				0,
+				-6
+			]
+		},
+		{
+			"cap_end": false,
+			"cap_start": false,
+			"double_sided": false,
+			"position_end": [
+				12,
+				0,
+				-6
+			],
+			"position_start": [
+				12,
+				0,
+				6
+			]
+		},
+		{
+			"cap_end": false,
+			"cap_start": false,
+			"double_sided": false,
+			"position_end": [
+				12,
+				0,
+				6
+			],
+			"position_start": [
+				6,
+				0,
+				6
+			]
+		}
+	],
+	"corners": [
+		[
+			0,
+			0,
+			2
+		]
+	]
+}

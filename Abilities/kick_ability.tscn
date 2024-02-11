@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://dwtky6q8388d1"]
+
+[ext_resource type="PackedScene" uid="uid://d2eybo1aplr7e" path="res://Abilities/AbilityBase.tscn" id="1_hedft"]
+[ext_resource type="Script" path="res://Abilities/KickAbility.cs" id="2_8yvdr"]
+[ext_resource type="Texture2D" uid="uid://ddvoxyg7ds638" path="res://Images/kick_icon.png" id="3_4h77n"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_kr763"]
+
+[node name="KickAbility" node_paths=PackedStringArray("kick_area", "area_timer") instance=ExtResource("1_hedft")]
+script = ExtResource("2_8yvdr")
+kick_area = NodePath("Area3D")
+area_timer = NodePath("AreaTimer")
+ability_image = ExtResource("3_4h77n")
+
+[node name="Area3D" type="Area3D" parent="." index="0"]
+process_mode = 4
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.04836, -1.05266)
+shape = SubResource("SphereShape3D_kr763")
+
+[node name="AreaTimer" type="Timer" parent="." index="2"]
+wait_time = 0.1
+one_shot = true
+
+[connection signal="timeout" from="AreaTimer" to="." method="_on_area_timer_timeout"]

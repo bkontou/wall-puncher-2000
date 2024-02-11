@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://d2eybo1aplr7e"]
+
+[ext_resource type="Script" path="res://Abilities/AbilityBase.cs" id="1_1m58f"]
+
+[node name="AbilityBase" type="Node3D" node_paths=PackedStringArray("ability_timer")]
+script = ExtResource("1_1m58f")
+ability_timer = NodePath("AbilityTimer")
+
+[node name="AbilityTimer" type="Timer" parent="."]
+one_shot = true

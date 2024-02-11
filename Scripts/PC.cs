@@ -21,8 +21,13 @@ public partial class PC : CharacterBody3D
 	[Export]
 	public Camera3D pc_camera;
 
+	[Export]
+	public AbilityBase ability_e;
+	[Export]
+	public AbilityBase ability_shift;
+
 	public const float Speed = 5.0f;
-	public const float JumpVelocity = 4.5f;
+	public const float JumpVelocity = 200.5f;
 	public const float mouse_sensitiviy = 1.0f;
 
 	// Get the gravity from the project settings to be synced with RigidBody nodes.
@@ -30,20 +35,49 @@ public partial class PC : CharacterBody3D
 
 	private bool controllable = true;
 
+	private Godot.Vector3 force;
+
+	private float FLOOR_FRICTION = 0.5f;
+
+
 	public override void _PhysicsProcess(double delta)
 	{
-		Godot.Vector3 velocity = Velocity;
+		force += gravity * Godot.Vector3.Down;
 
-		// Add the gravity.
-		if (!IsOnFloor())
-			velocity.Y -= gravity * (float)delta;
 
-		Godot.Vector3 direction = Godot.Vector3.Zero;
+		
 
-		if (controllable) {
-			// Handle Jump.
-			if (Input.IsActionJustPressed("ui_accept") && IsOnFloor())
-				velocity.Y = JumpVelocity;
+		if (controllable)
+		{
+			Godot.Vector3 direction;
+			if (IsOnFloor()) {				
+				// Get the input direction and handle the movement/deceleration.
+				// As good practice, you should replace UI actions with custom gameplay actions.
+				Godot.Vector2 inputDir = Input.GetVector("ui_left", "ui_right", "ui_up", "ui_down");
+				direction = (Transform.Basis * new Godot.Vector3(inputDir.X, 0, inputDir.Y)).Normalized();
+			} else {
+				direction = Godot.Vector3.Zero;
+			}
+
+			if (IsOnFloor()) {
+				if (direction != Godot.Vector3.Zero) {
+					Godot.Vector3 max_vel = Speed * direction;
+					Velocity = Velocity.MoveToward(max_vel, FLOOR_FRICTION);
+				} else {
+					Velocity = Velocity.MoveToward(Godot.Vector3.Zero, FLOOR_FRICTION);
+				}
+			}
+
+			if (Input.IsActionJustPressed("ui_accept"))
+			{
+				if (!IsOnFloor()) {
+					Velocity = Godot.Vector3.Zero;
+					force += JumpVelocity * (Godot.Vector3.Up + direction);
+				}
+				else {
+					force += JumpVelocity * Godot.Vector3.Up;
+				}
+			}
 
 			if (Input.IsActionJustPressed("ui_lmb") && pc_fist_timer.IsStopped()) {
 				pc_fist_area.ProcessMode = ProcessModeEnum.Always;
@@ -51,27 +85,22 @@ public partial class PC : CharacterBody3D
 				pc_fist_timer.Start();
 				pc_fist_animation.Play("fist_punch");
 			}
+				
 
-			// Get the input direction and handle the movement/deceleration.
-			// As good practice, you should replace UI actions with custom gameplay actions.
-			Godot.Vector2 inputDir = Input.GetVector("ui_left", "ui_right", "ui_up", "ui_down");
-			direction = (Transform.Basis * new Godot.Vector3(inputDir.X, 0, inputDir.Y)).Normalized();
+			if (ability_e != null)
+				ability_e.pollAction("ui_action_e");
 			
-		}
-	
-		if (direction != Godot.Vector3.Zero)
+			if (ability_shift != null)
+				ability_shift.pollAction("ui_action_shift");
+		} else 
 		{
-			velocity.X = direction.X * Speed;
-			velocity.Z = direction.Z * Speed;
+			Velocity = Velocity.MoveToward(Godot.Vector3.Zero, FLOOR_FRICTION);
 		}
-		else
-		{
-			velocity.X = Mathf.MoveToward(Velocity.X, 0, Speed);
-			velocity.Z = Mathf.MoveToward(Velocity.Z, 0, Speed);
-		}
-			
-		Velocity = velocity;
+		
+		Velocity += ((float) delta) * force;
+		
 		MoveAndSlide();
+		force = Godot.Vector3.Zero;
 	}
 
 	public override void _Input(InputEvent @event)

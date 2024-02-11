@@ -8,3 +8,4 @@
 script = ExtResource("1_tgar3")
 wall_scene = ExtResource("2_d753t")
 wall_material = ExtResource("3_cb12b")
+wall_color = Color(0.572549, 0.443137, 0, 1)

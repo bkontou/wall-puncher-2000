@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Linq;
 
 public partial class StartScreen : Node3D
 {
@@ -11,12 +12,16 @@ public partial class StartScreen : Node3D
 	[Export]
 	public Control level_select;
 	[Export]
+	public Control ability_select;
+	[Export]
 	public VBoxContainer levels_list;
 	[Export]
 	public Control main_menu_buttons;
 	[Export]
 	public Timer start_timer;
 
+	[Export]
+	public Node item_list;
 
 	private int _selected_level = 0;
 
@@ -32,6 +37,21 @@ public partial class StartScreen : Node3D
 			var load_level_lambda = () => { _on_level_button_pressed(level_id); };
 			new_button.Connect(Button.SignalName.Pressed, Callable.From(load_level_lambda));
 			levels_list.AddChild(new_button);
+		}
+
+		foreach (ItemSelector item in item_list.GetChildren())
+		{
+			GD.Print(item.item_name);
+			if (GetNode<GlobalInfo>("/root/GlobalInfo").unlocked_items.Contains(item.item_name))
+			{
+				item.unlocked = true;
+				item.item_lock_overlay.Visible = false;
+				item.Modulate = new Color(1,1,1,1);
+			}
+			else {
+				item.unlocked = false;
+				item.Modulate = new Color(1,1,1,0.15f);
+			}
 		}
 	}
 
@@ -70,4 +90,17 @@ public partial class StartScreen : Node3D
 		start_timer.Start();
 		_selected_level = level;
 	}
+
+	public void _on_upgrade_button_pressed()
+	{
+		ability_select.Visible = true;
+	}
+
+	private void _on_ability_back_button_pressed()
+	{
+		ability_select.Visible = false;
+	}
+
 }
+
+

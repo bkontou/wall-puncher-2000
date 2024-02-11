@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bjtei41o1cks5"]
+
+[ext_resource type="Script" path="res://GlobalInfo.cs" id="1_kafq2"]
+
+[node name="GlobalInfo" type="Node" groups=["Persist"]]
+script = ExtResource("1_kafq2")

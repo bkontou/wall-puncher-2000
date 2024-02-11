@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 public struct WallSegmentData
 {
@@ -31,6 +32,9 @@ public partial class WallMap : Node3D
 
 	[Export]
 	public StandardMaterial3D wall_material;
+
+	[Export]
+	public Color wall_color;
 
 	//[Export]
 	public List<WallSegmentData> wall_segments = new List<WallSegmentData>();
@@ -101,7 +105,6 @@ public partial class WallMap : Node3D
 
 	private void loadData()
 	{
-		GD.Print(walls_data.Data);
 		foreach(Godot.Collections.Dictionary val in walls_data.Data.AsGodotDictionary()["walls"].AsGodotArray())
 		{
 			WallSegmentData wall = new WallSegmentData();
@@ -125,6 +128,14 @@ public partial class WallMap : Node3D
 			//GD.Print(segment.position_start, " ", segment.position_end);
 			buildWall(segment);
 		}
+
+		foreach (var val in walls_data.Data.AsGodotDictionary()["corners"].AsGodotArray())
+		{
+			GD.Print(val);
+			MeshInstance3D corner_mesh = addCornerMesh();
+			AddChild(corner_mesh);
+			corner_mesh.GlobalPosition = arrayToVec3(val.AsGodotArray<float>()) + 0.5f * 4 * Vector3.Up;
+		}
 	}
 
 	private void buildWall(WallSegmentData segment)
@@ -140,6 +151,7 @@ public partial class WallMap : Node3D
 		wall.double_sided = segment.double_sided;
 		wall.cap_start_wall = segment.cap_start;
 		wall.cap_end_wall = segment.cap_end;
+		wall.wall_color = wall_color;
 
 		// Rotate and translate
 		Vector3 wall_center = (segment.position_end + segment.position_start) / 2f;
@@ -152,5 +164,20 @@ public partial class WallMap : Node3D
 		//wall.LookAtFromPosition(wall_center, wall_dir_final, Vector3.Back);
 
 		wall.build();
+
+		// MeshInstance3D corner_mesh = addCornerMesh();
+		// wall.AddChild(corner_mesh);
+		// corner_mesh.GlobalPosition = segment.position_end + 0.5f * 4 * Vector3.Up;
+	}
+
+	MeshInstance3D addCornerMesh()
+	{
+		MeshInstance3D corner_mesh = new MeshInstance3D();
+		corner_mesh.Mesh = new BoxMesh();
+		corner_mesh.Mesh.SurfaceSetMaterial(0, wall_material);
+		corner_mesh.Mesh.Set("size", new Vector3(wall_thickness, 4, wall_thickness));
+		//corner_mesh.RotationDegrees = new Vector3(-90, 0, 0);
+
+		return corner_mesh;
 	}
 }

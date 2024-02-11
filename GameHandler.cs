@@ -28,6 +28,15 @@ public partial class GameHandler : Node
 	[Export]
 	public Score game_score;
 
+	[Export]
+	public ProgressBar abiltiy_e_cooldown;
+	[Export]
+	public ProgressBar ability_shift_cooldown;
+	[Export]
+	public TextureRect ability_e_texture;
+	[Export]
+	public TextureRect ability_shift_texture;
+
 	[Export(PropertyHint.File)]
 	public String main_menu;
 
@@ -43,12 +52,14 @@ public partial class GameHandler : Node
 		game_starting = true;
 		end_screen.Visible = false;
 		countdown_screen.Visible = true;
+
+		initializePCAbilities();
+		initializeAbilityImages();
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-		GD.Print(Engine.GetFramesPerSecond());
 		if (Input.IsActionJustPressed("ui_cancel") && !game_finished && !game_starting) {
 			if (paused) {
 				pc.setControllable(true);
@@ -67,6 +78,8 @@ public partial class GameHandler : Node
 		if (!start_timer.IsStopped()) {
 			countdown_label.Text = Mathf.Ceil(start_timer.TimeLeft).ToString();
 		}
+
+		updateAbilityTimers();
 	}
 
     public override void _PhysicsProcess(double delta)
@@ -80,6 +93,46 @@ public partial class GameHandler : Node
 			//timer_arm.RotateY();
 		}
     }
+
+	private void updateAbilityTimers()
+	{
+		if (pc.ability_e != null) {
+			abiltiy_e_cooldown.Value = 100 * (1f - ((AbilityBase) pc.ability_e).ability_timer.TimeLeft / ((AbilityBase) pc.ability_e).ability_timer.WaitTime);
+		}
+
+		if (pc.ability_shift != null) {
+			ability_shift_cooldown.Value = 100 * (1f - ((AbilityBase) pc.ability_shift).ability_timer.TimeLeft / ((AbilityBase) pc.ability_shift).ability_timer.WaitTime);
+		}
+
+	}
+
+	private void initializeAbilityImages()
+	{
+		if (pc.ability_e != null) {
+			ability_e_texture.Texture = pc.ability_e.ability_image;
+		}
+
+		if (pc.ability_shift != null) {
+			ability_shift_texture.Texture = pc.ability_shift.ability_image;
+		}
+	}
+
+	private void initializePCAbilities()
+	{
+		if (GetNode<GlobalInfo>("/root/GlobalInfo").selected_shift_item != null) {
+			AbilityBase ability = GD.Load<PackedScene>(GetNode<GlobalInfo>("/root/GlobalInfo").selected_shift_item.item_scene).Instantiate<AbilityBase>();
+			pc.GetNode("Camera3D").AddChild(ability);
+			ability.pc = pc;
+			pc.ability_shift = ability;
+		}
+
+		if (GetNode<GlobalInfo>("/root/GlobalInfo").selected_e_item != null) {
+			AbilityBase ability = GD.Load<PackedScene>(GetNode<GlobalInfo>("/root/GlobalInfo").selected_e_item.item_scene).Instantiate<AbilityBase>();
+			pc.GetNode("Camera3D").AddChild(ability);
+			ability.pc = pc;
+			pc.ability_e = ability;
+		}
+	}
 
     public void _on_level_timer_timeout() {
 		pc.setControllable(false);
@@ -101,6 +154,7 @@ public partial class GameHandler : Node
 	public void _on_start_timer_timeout()
 	{
 		pc.setControllable(true);
+		pc.Velocity = Vector3.Zero;
 		game_timer.Start();
 		game_starting = false;
 		countdown_screen.Visible = false;
