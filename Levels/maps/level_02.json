@@ -3,7 +3,7 @@
 		{
 			"cap_end": false,
 			"cap_start": false,
-			"double_sided": true,
+			"double_sided": false,
 			"position_end": [
 				8,
 				0,
@@ -18,7 +18,7 @@
 		{
 			"cap_end": false,
 			"cap_start": false,
-			"double_sided": true,
+			"double_sided": false,
 			"position_end": [
 				8,
 				0,
@@ -33,7 +33,7 @@
 		{
 			"cap_end": false,
 			"cap_start": false,
-			"double_sided": true,
+			"double_sided": false,
 			"position_end": [
 				-8,
 				0,
@@ -48,7 +48,7 @@
 		{
 			"cap_end": false,
 			"cap_start": false,
-			"double_sided": true,
+			"double_sided": false,
 			"position_end": [
 				-8,
 				0,
@@ -62,17 +62,17 @@
 		},
 		{
 			"cap_end": true,
-			"cap_start": false,
+			"cap_start": true,
 			"double_sided": true,
 			"position_end": [
 				0,
 				0,
-				-8
+				2
 			],
 			"position_start": [
 				0,
 				0,
-				2
+				-8
 			]
 		}
 	]

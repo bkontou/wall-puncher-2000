@@ -23,6 +23,9 @@ public partial class StartScreen : Node3D
 	[Export]
 	public Node item_list;
 
+	[Export]
+	public Node3D walls;
+
 	private int _selected_level = 0;
 
 	// Called when the node enters the scene tree for the first time.
@@ -58,6 +61,7 @@ public partial class StartScreen : Node3D
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
+		walls.Rotate(Vector3.Up, 0.1f * (float) delta);
 	}
 
 	public void _on_start_button_pressed()

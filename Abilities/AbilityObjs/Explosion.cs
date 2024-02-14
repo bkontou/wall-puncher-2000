@@ -7,6 +7,8 @@ public partial class Explosion : Node3D
 	public Area3D explosion_area;
 	[Export]
 	public MeshInstance3D explosion_mesh;
+	[Export]
+	AudioStreamPlayer3D explosion_audio;
 
 	private Tween explosion_tween;
 
@@ -31,6 +33,7 @@ public partial class Explosion : Node3D
 		explosion_tween.TweenProperty(explosion_mesh, "scale", 2 * radius * Vector3.One, 0.5f);
 		explosion_tween.TweenProperty(explosion_mesh, "transparency", 1f, 1.2f);
 		explosion_tween.Connect(Tween.SignalName.Finished, new Callable(this, MethodName.QueueFree));
+		explosion_audio.Play();
 	}
 }
 

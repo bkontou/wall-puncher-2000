@@ -15,6 +15,8 @@ public partial class Wall : Node3D
 	public MeshInstance3D editor_wall_rep;
 	[Export]
 	public StandardMaterial3D wall_material;
+	[Export]
+	Node audio_nodes;
 
 	
 	[Export]
@@ -54,6 +56,9 @@ public partial class Wall : Node3D
 
 	private Callable wall_fragment_signal_callable;
 	private List<int> corner_ids = new List<int>(); 
+
+	private float sfx_cooldown = 0.0f;
+	public float sfx_cooldown_timeout = 0.15f;
 	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -71,6 +76,11 @@ public partial class Wall : Node3D
 		// 	//wall_background.Mesh.Set("size", new Vector2(wall_width, wall_height));
 		// 	editor_wall_rep.Mesh.Set("size", new Vector2(wall_width, wall_height));
 		// }
+
+		if (sfx_cooldown < sfx_cooldown_timeout)
+		{
+			sfx_cooldown += (float) delta;
+		}
 	}
 
 	public void build()
@@ -181,7 +191,27 @@ public partial class Wall : Node3D
 
 	private void emitDestroySignal(float fragment_area)
 	{
+		if (sfx_cooldown > sfx_cooldown_timeout) {
+			playDestroyAudio();
+			sfx_cooldown = 0.0f;
+		}
+		
 		EmitSignal(SignalName.onWallFragmentDestroyed, fragment_area);
+	}
+
+	private void playDestroyAudio()
+	{
+		var rng = new RandomNumberGenerator();
+		foreach (AudioStreamPlayer3D stream_player in audio_nodes.GetChildren())
+		{
+			if (!stream_player.Playing)
+			{
+				GD.Print("Not playing. playing sound now");
+				stream_player.PitchScale = rng.RandfRange(0.8f, 1.2f);
+				stream_player.Play();
+				return;
+			}
+		}
 	}
 
 	private void placeStuds(bool flipped)

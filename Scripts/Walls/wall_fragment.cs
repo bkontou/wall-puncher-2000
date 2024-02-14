@@ -16,9 +16,6 @@ public partial class wall_fragment : Node3D
 	[Export]
 	public CpuParticles3D wall_particles;
 
-	[Export]
-	public AudioStreamPlayer3D wall_sfx;
-
 	[Signal]
 	public delegate void onWallDestroyEventHandler(float fragment_area);
 
@@ -74,8 +71,6 @@ public partial class wall_fragment : Node3D
 
 		wall_particles.Emitting = true;
 		array_mesh.Visible = false;
-		// wall_sfx.PitchScale = new RandomNumberGenerator().RandfRange(0.8f, 1.2f);
-		// wall_sfx.Play();
 		//area.SetDeferred("monitorable", false);
 		collision_polygon.SetDeferred("disabled", true);
 		EmitSignal(SignalName.onWallDestroy, getFragmentArea());

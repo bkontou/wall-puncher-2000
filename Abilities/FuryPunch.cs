@@ -45,6 +45,8 @@ public partial class FuryPunch : AbilityBase
 			explosion.Position = collision_point;
 
 			pc.Velocity = explosion_knockback * collision_normal;
+
+			ability_timer.Start();
 		}
 	}
 }

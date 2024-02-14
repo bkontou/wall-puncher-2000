@@ -1,12 +1,17 @@
-[gd_scene load_steps=5 format=3 uid="uid://cctwdyfr4mjgr"]
+[gd_scene load_steps=6 format=3 uid="uid://cctwdyfr4mjgr"]
 
 [ext_resource type="PackedScene" uid="uid://d2eybo1aplr7e" path="res://Abilities/AbilityBase.tscn" id="1_5o6u8"]
 [ext_resource type="Script" path="res://Abilities/MindPunch.cs" id="2_stlvw"]
 [ext_resource type="PackedScene" uid="uid://bso55e4khxafj" path="res://Abilities/AbilityObjs/PunchProjectile.tscn" id="3_fev84"]
 [ext_resource type="Texture2D" uid="uid://qpoevbgm1g6r" path="res://Images/mind_punch_icon.png" id="4_cytgc"]
+[ext_resource type="AudioStream" uid="uid://bbsvr5jrhbd73" path="res://Sfx/meditate_on_that.ogg" id="5_oceet"]
 
-[node name="MindPunch" instance=ExtResource("1_5o6u8")]
+[node name="MindPunch" node_paths=PackedStringArray("sfx_stream") instance=ExtResource("1_5o6u8")]
 script = ExtResource("2_stlvw")
 punch_projectile_scene = ExtResource("3_fev84")
 projectile_speed = 50.0
+sfx_stream = NodePath("AudioStreamPlayer")
 ability_image = ExtResource("4_cytgc")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." index="1"]
+stream = ExtResource("5_oceet")

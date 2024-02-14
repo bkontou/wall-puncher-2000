@@ -8,6 +8,8 @@ public partial class MindPunch : AbilityBase
 
 	[Export]
 	public float projectile_speed;
+	[Export]
+	public AudioStreamPlayer sfx_stream;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -32,6 +34,10 @@ public partial class MindPunch : AbilityBase
 			GetTree().CurrentScene.AddChild(punch_projectile);
 			punch_projectile.Scale = 0.5f * Vector3.One;
 			ability_timer.Start();
+
+			var rng = new RandomNumberGenerator();
+			sfx_stream.PitchScale = rng.RandfRange(0.9f, 1.1f);
+			sfx_stream.Play();
 		}
 	}
 }

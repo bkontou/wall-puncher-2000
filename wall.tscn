@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://wwfl4wpjxgd0"]
+[gd_scene load_steps=10 format=3 uid="uid://wwfl4wpjxgd0"]
 
 [ext_resource type="Script" path="res://Scripts/Walls/Wall.cs" id="1_85j6u"]
 [ext_resource type="PackedScene" uid="uid://u55a0o8j3t72" path="res://wall_fragment.tscn" id="2_gjkb1"]
 [ext_resource type="Material" uid="uid://cermpqn8856wi" path="res://wall_fragment.tres" id="2_qx2hx"]
 [ext_resource type="PackedScene" uid="uid://dfu8bvfmja3bm" path="res://wall_stud.tscn" id="3_x2or7"]
+[ext_resource type="AudioStream" uid="uid://b2apswmdubq3t" path="res://Sfx/smash_01.ogg" id="5_wlwab"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jpycm"]
 cull_mode = 2
@@ -19,12 +20,13 @@ orientation = 2
 [sub_resource type="PlaneMesh" id="PlaneMesh_nug33"]
 size = Vector2(6.78607, 4)
 
-[node name="Wall" type="Node3D" node_paths=PackedStringArray("wall_background", "wall_collider", "editor_wall_rep")]
+[node name="Wall" type="Node3D" node_paths=PackedStringArray("wall_background", "wall_collider", "editor_wall_rep", "audio_nodes")]
 script = ExtResource("1_85j6u")
 wall_background = NodePath("WallBackground")
 wall_collider = NodePath("StaticBody3D/CollisionShape3D")
 editor_wall_rep = NodePath("EditorWallRep")
 wall_material = ExtResource("2_qx2hx")
+audio_nodes = NodePath("AudioNodes")
 wall_fragment_scene = ExtResource("2_gjkb1")
 wall_stud_scene = ExtResource("3_x2or7")
 
@@ -42,3 +44,35 @@ shape = SubResource("BoxShape3D_8evx4")
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0.5)
 visible = false
 mesh = SubResource("PlaneMesh_nug33")
+
+[node name="AudioNodes" type="Node3D" parent="."]
+
+[node name="AudioStreamPlayer3D1" type="AudioStreamPlayer3D" parent="AudioNodes"]
+stream = ExtResource("5_wlwab")
+
+[node name="AudioStreamPlayer3D2" type="AudioStreamPlayer3D" parent="AudioNodes"]
+stream = ExtResource("5_wlwab")
+
+[node name="AudioStreamPlayer3D3" type="AudioStreamPlayer3D" parent="AudioNodes"]
+stream = ExtResource("5_wlwab")
+
+[node name="AudioStreamPlayer3D4" type="AudioStreamPlayer3D" parent="AudioNodes"]
+stream = ExtResource("5_wlwab")
+
+[node name="AudioStreamPlayer3D5" type="AudioStreamPlayer3D" parent="AudioNodes"]
+stream = ExtResource("5_wlwab")
+
+[node name="AudioStreamPlayer3D6" type="AudioStreamPlayer3D" parent="AudioNodes"]
+stream = ExtResource("5_wlwab")
+
+[node name="AudioStreamPlayer3D7" type="AudioStreamPlayer3D" parent="AudioNodes"]
+stream = ExtResource("5_wlwab")
+
+[node name="AudioStreamPlayer3D8" type="AudioStreamPlayer3D" parent="AudioNodes"]
+stream = ExtResource("5_wlwab")
+
+[node name="AudioStreamPlayer3D9" type="AudioStreamPlayer3D" parent="AudioNodes"]
+stream = ExtResource("5_wlwab")
+
+[node name="AudioStreamPlayer3D10" type="AudioStreamPlayer3D" parent="AudioNodes"]
+stream = ExtResource("5_wlwab")

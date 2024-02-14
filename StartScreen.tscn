@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://hjtwj2thn54v"]
+[gd_scene load_steps=26 format=3 uid="uid://hjtwj2thn54v"]
 
 [ext_resource type="Script" path="res://Scripts/StartScreen.cs" id="1_e1rfd"]
 [ext_resource type="PackedScene" uid="uid://br52cec17ytdt" path="res://Levels/level_01.tscn" id="2_32vg5"]
@@ -13,11 +13,41 @@
 [ext_resource type="Texture2D" uid="uid://b2j1hc2i3uu42" path="res://Images/wall_phase_icon.png" id="10_mku37"]
 [ext_resource type="Texture2D" uid="uid://ru6fpwarhctk" path="res://Images/fury_punch_icon.png" id="11_yqkg1"]
 [ext_resource type="Texture2D" uid="uid://qpoevbgm1g6r" path="res://Images/mind_punch_icon.png" id="12_pq8ou"]
+[ext_resource type="PackedScene" uid="uid://b4jbmrh1he88p" path="res://Objects/Models/ceiling_fan.glb" id="14_obdhu"]
+[ext_resource type="Texture2D" uid="uid://bngjjy2nds2lj" path="res://Images/ceiling.png" id="16_xqpk3"]
+[ext_resource type="Texture2D" uid="uid://b038hjwe6bp7i" path="res://Images/carpet.png" id="17_ujvfk"]
+[ext_resource type="Material" uid="uid://cermpqn8856wi" path="res://wall_fragment.tres" id="18_0au2w"]
+[ext_resource type="Texture2D" uid="uid://betfmwvsuydmr" path="res://Images/door1.png" id="18_x32kq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_et2go"]
 size = Vector2(57, 56)
 
-[node name="StartScreen" type="Node3D" node_paths=PackedStringArray("loading_screen", "level_select", "ability_select", "levels_list", "main_menu_buttons", "start_timer", "item_list")]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_msqqc"]
+albedo_color = Color(0.803922, 0.803922, 0.803922, 1)
+albedo_texture = ExtResource("16_xqpk3")
+roughness_texture = ExtResource("16_xqpk3")
+uv1_triplanar = true
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_h5gte"]
+material = SubResource("StandardMaterial3D_msqqc")
+size = Vector2(50, 50)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_d4p26"]
+size = Vector2(56, 56)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hbgeb"]
+albedo_color = Color(0.439216, 0.439216, 0.439216, 1)
+albedo_texture = ExtResource("17_ujvfk")
+uv1_triplanar = true
+texture_filter = 0
+
+[sub_resource type="BoxMesh" id="BoxMesh_bmcmt"]
+size = Vector3(10, 5, 0.5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_s0iij"]
+size = Vector3(2.98039, 5.00847, 2.11108)
+
+[node name="StartScreen" type="Node3D" node_paths=PackedStringArray("loading_screen", "level_select", "ability_select", "levels_list", "main_menu_buttons", "start_timer", "item_list", "walls")]
 script = ExtResource("1_e1rfd")
 levels = Array[PackedScene]([ExtResource("2_32vg5"), ExtResource("3_2xjia"), ExtResource("4_i2w8h"), ExtResource("5_h61kj")])
 loading_screen = NodePath("Control/LoadingScreen")
@@ -27,6 +57,7 @@ levels_list = NodePath("Control/LevelSelect/VBoxContainer")
 main_menu_buttons = NodePath("Control/VBoxContainer")
 start_timer = NodePath("Control/StartTimer")
 item_list = NodePath("Control/UpgradePanel/ItemList")
+walls = NodePath("Walls")
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
@@ -302,7 +333,7 @@ unlocked = false
 item_shift_area = NodePath("../../ItemPlacement1/ItemPlacement1/Item1Area")
 item_e_area = NodePath("../../ItemPlacement2/Item2Area")
 item_info_label = NodePath("../../ItemInfo")
-item_scene = "res://Abilities/kick_ability.tscn"
+item_scene = "res://Abilities/fury_punch.tscn"
 item_name = "Fury Punch"
 item_description = "Deliver a powerful punch that deals large amounts of damage"
 item_image = ExtResource("11_yqkg1")
@@ -354,6 +385,62 @@ text = "UNLOCK"
 [node name="StartTimer" type="Timer" parent="Control"]
 wait_time = 0.25
 one_shot = true
+
+[node name="Camera3D" type="Camera3D" parent="."]
+
+[node name="Walls" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.42755, 0)
+
+[node name="ceiling_fan" parent="Walls" instance=ExtResource("14_obdhu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.23139, 0)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Walls/ceiling_fan"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.284177, 0)
+omni_range = 8.47413
+
+[node name="Roof" type="MeshInstance3D" parent="Walls"]
+transform = Transform3D(1, 0, 0, 0, -1, -8.74228e-08, 0, 8.74228e-08, -1, 0, 3.42643, 0)
+mesh = SubResource("PlaneMesh_h5gte")
+
+[node name="Floor" type="MeshInstance3D" parent="Walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.00525719, 0)
+mesh = SubResource("PlaneMesh_d4p26")
+surface_material_override/0 = SubResource("StandardMaterial3D_hbgeb")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -5)
+mesh = SubResource("BoxMesh_bmcmt")
+surface_material_override/0 = ExtResource("18_0au2w")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 5)
+mesh = SubResource("BoxMesh_bmcmt")
+surface_material_override/0 = ExtResource("18_0au2w")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="Walls"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 5, 1.5, 0)
+mesh = SubResource("BoxMesh_bmcmt")
+surface_material_override/0 = ExtResource("18_0au2w")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="Walls"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -5, 1.5, 0)
+mesh = SubResource("BoxMesh_bmcmt")
+surface_material_override/0 = ExtResource("18_0au2w")
+
+[node name="Door2" type="Sprite3D" parent="Walls"]
+transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, -1.29969, 1.48137, 4.74588)
+modulate = Color(0.945098, 0.956863, 0.980392, 1)
+shaded = true
+texture_filter = 0
+texture = ExtResource("18_x32kq")
+
+[node name="Area3D" type="Area3D" parent="Walls/Door2"]
+collision_layer = 4
+collision_mask = 4
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Walls/Door2/Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0258865, 0.1325, 0.393186)
+shape = SubResource("BoxShape3D_s0iij")
 
 [connection signal="pressed" from="Control/VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
 [connection signal="pressed" from="Control/VBoxContainer/Upgrades" to="." method="_on_upgrade_button_pressed"]
